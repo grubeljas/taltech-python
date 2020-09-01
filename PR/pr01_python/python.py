@@ -1,9 +1,10 @@
+"""This program asks user about his name and year of birth.
+/n Then it says how old user was when Python 3.0 was released."""
+
 name = input("What is yor name?")
 year = int(input("Hello " + name + "! What year were you born in?"))
-persons_age = 2008 - year
-python_age = year - 2008
 
 if int(year) <= 2008:
-    print("You were age " + str(persons_age) + " years old when Python 3.0 was released.")
+    print("You were age " + str(2008 - year) + " years old when Python 3.0 was released.")
 else:
-    print("Python 3 was " + str(python_age) + " years old when you were born.")
+    print("Python 3 was " + str(year - 2008) + " years old when you were born.")
