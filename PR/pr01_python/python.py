@@ -1,5 +1,4 @@
-"""This program asks user about his name and year of birth.
-/n Then it says how old user was when Python 3.0 was released"""
+"""This program asks user about his name and year of birth."""
 
 name = input("What is your name?")
 year = int(input("Hello, " + name + "! What year were you born in?"))
