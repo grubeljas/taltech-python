@@ -1,4 +1,4 @@
-"""This program counts minimum amount of coins for change"""
+"""This program counts minimum amount of coins for change."""
 
 summ = int(input("Enter a sum: "))
 fifty = int(summ // 50)
