@@ -1,7 +1,7 @@
 """Primes identifier."""
 
 
-def is_prime_number(number: int):
+def is_prime_number(number):
     if (number == 0) or (number == 1):
         return False
     elif number == 2:
