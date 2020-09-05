@@ -2,7 +2,7 @@
 
 
 def is_prime_number(number):
-    """Identify if the number is prime."""
+    """Check if the number is prime."""
     if (number == 0) or (number == 1):
         return False
     elif number == 2:
