@@ -7,14 +7,12 @@ def is_prime_number(number):
         return False
     elif number == 2:
         return True
-    else:
-        i = 2
-        while number % i != 0:
-            i += 1
-            if i == number:
-                return True
-        else:
-            return False
+    i = 2
+    while number % i != 0:
+    i  += 1
+    if i == number:
+    return True
+        return False
 
 
 if __name__ == '__main__':
