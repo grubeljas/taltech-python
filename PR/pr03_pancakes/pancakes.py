@@ -44,10 +44,10 @@ def make_dough(ingredients: list) -> int:
     dough = 0
     empty = []
     ingreds_for_one_pancake = ["egg"] + ["milk"] * 5 + ["flour"] * 4 + ["butter"] + ["sugar"] * 2
-    while ingredients != empty:
+    while ingredients != empty or ValueError:
         try:
             for i in ingreds_for_one_pancake:
-                ingreds_for_one_pancake.remove(i)
+                ingredients.remove(i)
             dough += 7
         except ValueError:
             break
