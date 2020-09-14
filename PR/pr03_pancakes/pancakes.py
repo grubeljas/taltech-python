@@ -17,7 +17,7 @@ def make_n_pancakes(n: int, ingredients: list) -> int:
     """
     dough = make_dough(ingredients)
     pancakes = 0
-    if n > 50:
+    if n > 30:
         needed_dough = n * 0.8
         if dough < needed_dough:
             pancakes = dough // 0.8
@@ -43,21 +43,14 @@ def make_dough(ingredients: list) -> int:
     """
     dough = 0
     empty = []
+    ingreds_for_one_pancake = ["egg"] + ["milk"] * 5 + ["flour"] * 4 + ["butter"] + ["sugar"] * 2
     while ingredients != empty:
         try:
-            ingredients.remove("egg")
-            for milk in range(5):
-                ingredients.remove("milk")
-            for flour in range(4):
-                ingredients.remove("flour")
-            ingredients.remove("butter")
-            ingredients.remove("sugar")
-            ingredients.remove("sugar")
+            for i in ingreds_for_one_pancake:
+                ingreds_for_one_pancake.remove(i)
             dough += 7
         except ValueError:
             break
-        finally:
-            pass
     return dough
 
 
