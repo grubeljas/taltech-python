@@ -23,6 +23,7 @@ def make_n_pancakes(n: int, ingredients: list) -> int:
             pancakes = dough // 0.8
         else:
             pancakes = n
+        return pancakes
     while can_make_pancake(dough) and pancakes < n:
         make_a_pancake(dough)
         pancakes += 1
