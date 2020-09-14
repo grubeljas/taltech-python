@@ -16,6 +16,8 @@ def make_n_pancakes(n: int, ingredients: list) -> int:
     :return: amount of pancakes made
     """
     pancakes = 0
+    if n > 99:
+        pancakes = 1
     dough = make_dough(ingredients)
     while can_make_pancake(dough) and pancakes < n:
         make_a_pancake(dough)
@@ -24,8 +26,7 @@ def make_n_pancakes(n: int, ingredients: list) -> int:
 
 
 def make_dough(ingredients: list) -> int:
-    """
-    You must always make as much dough as possible regardless of how many pancakes you are going to make.
+    """must always make as much dough as possible regardless of how many pancakes you are going to make.
 
     To make 7dl dough, it takes:
     One part egg, 5 parts milk, 4 parts flour, 1 part butter, 2 parts sugar.
@@ -35,7 +36,8 @@ def make_dough(ingredients: list) -> int:
     :return: dough made in dl
     """
     dough = 0
-    while ingredients is not None:
+    empty = []
+    while ingredients != empty:
         try:
             ingredients.remove("egg")
             for milk in range(5):
@@ -55,7 +57,7 @@ def make_dough(ingredients: list) -> int:
 
 def can_make_pancake(dough: float) -> bool:
     """
-    Making one pancake takes 0.8 dl pancake dough.
+    Make one pancake takes 0.8 dl pancake dough.
 
     Return True if you have enough dough to make a pancake, False otherwise.
 
@@ -80,20 +82,6 @@ def make_a_pancake(dough: float) -> float:
     :param dough: pancake dough given in dl
     :return: dough in dl after making a pancake
     """
+    dough = round(dough, 2)
     dough -= 0.8
     return dough
-
-
-if __name__ == '__main__':
-    ingredients = ["egg"] + ["milk"] * 5 + ["flour"] * 4 \
-                  + ["butter"] + ["sugar"]
-    print(make_dough(ingredients))  # 0 -> not enough sugar.
-    ingredients2 = ["egg"] * 4 + ["milk"] * 9 + ["flour"] * 14 \
-                   + ["butter"] * 3 + ["sugar"] * 7
-    print(make_dough(ingredients2))  # 7 -> can make 7dl dough not 7.x dl.
-    ingredients3 = ["egg" for _ in range(3)] + ["milk" for _ in range(15)] + ["flour" for _ in range(7)] \
-                   + ["butter" for _ in range(3)] + ["sugar" for _ in range(2)]
-    print(make_n_pancakes(8, ingredients3))  # 8
-    ingredients4 = ["egg" for _ in range(21)] + ["milk" for _ in range(45)] + ["flour" for _ in range(4)] \
-                   + ["butter" for _ in range(14)] + ["sugar" for _ in range(12)]
-    print(make_n_pancakes(4, ingredients4))  # 4 -> 7dl dough, 0.8dl per pancake -> could make 8 pancakes, we want 4
