@@ -15,13 +15,12 @@ def make_n_pancakes(n: int, ingredients: list) -> int:
     :param ingredients: given ingredients
     :return: amount of pancakes made
     """
-    pancakes = 0
-    if n > 99:
-        pancakes = 1
     dough = make_dough(ingredients)
-    while can_make_pancake(dough) and pancakes < n:
+    pancakes = 0
+    while can_make_pancake(dough) and pancakes <= n:
         make_a_pancake(dough)
         pancakes += 1
+        dough -= 0.8
     return pancakes
 
 
@@ -82,6 +81,6 @@ def make_a_pancake(dough: float) -> float:
     :param dough: pancake dough given in dl
     :return: dough in dl after making a pancake
     """
-    dough = round(dough, 2)
     dough -= 0.8
+    dough = round(dough, 2)
     return dough
