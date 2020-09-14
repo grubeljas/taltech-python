@@ -17,7 +17,13 @@ def make_n_pancakes(n: int, ingredients: list) -> int:
     """
     dough = make_dough(ingredients)
     pancakes = 0
-    while can_make_pancake(dough) and pancakes <= n:
+    if n > 50:
+        needed_dough = n * 0.8
+        if dough < needed_dough:
+            pancakes = dough // 0.8
+        else:
+            pancakes = n
+    while can_make_pancake(dough) and pancakes < n:
         make_a_pancake(dough)
         pancakes += 1
         dough -= 0.8
