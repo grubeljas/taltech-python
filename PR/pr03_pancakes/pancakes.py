@@ -16,6 +16,7 @@ def make_n_pancakes(n: int, ingredients: list) -> int:
     :return: amount of pancakes made
     """
     dough = make_dough(ingredients)
+    dough = round(dough, 2)
     pancakes = 0
     if n > 30:
         needed_dough = n * 0.8
