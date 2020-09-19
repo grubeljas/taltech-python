@@ -3,7 +3,7 @@
 
 def booksortation(books: list) -> dict:
     """
-    Given a list of books (strings). Your task is to categorize and sort them.
+    Give a list of books (strings). Your task is to categorize and sort them.
 
     There are five books categories: spell books, history books, relics books, potion books and other books.
 
@@ -33,6 +33,7 @@ def booksortation(books: list) -> dict:
 
 def add_book_to_category(book: str, category: str, categorised_books: dict) -> dict:
     """
+    add
     :param book:
     :param category:
     :param categorised_books:
