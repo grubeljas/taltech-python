@@ -3,7 +3,7 @@
 
 def booksortation(books: list) -> dict:
     """
-    Given a list of books (strings). Your task is to categorize and sort them.
+    Give a list of books (strings). Your task is to categorize and sort them.
 
     There are five books categories: spell books, history books, relics books, potion books and other books.
 
@@ -28,11 +28,15 @@ def booksortation(books: list) -> dict:
             add_book_to_category(book, "potion books", categor_books)
         else:
             add_book_to_category(book, "other books", categor_books)
+    for key in tuple(categor_books):
+        if not categor_books[key]:
+            del categor_books[key]
     return categor_books
 
 
 def add_book_to_category(book: str, category: str, categorised_books: dict) -> dict:
     """
+    add
     :param book:
     :param category:
     :param categorised_books:
@@ -71,14 +75,12 @@ def is_history_book(book: str) -> bool:
     :param book: given book as a string
     :return: True if given book is a history book, False otherwise
     """
-    if book.startswith("*"):
-        book.replace("*", "")
     books = book.split()
     for word in books:
-        if word[0].isupper():
-            pass
-        else:
+        if not word[0].isupper():
             return False
+        else:
+            pass
     return True
 
 
@@ -150,3 +152,6 @@ def is_potion_book(book: str) -> bool:
         return True
     else:
         return False
+
+
+print(booksortation(["Bruh", "*j*"]))
