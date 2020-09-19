@@ -16,7 +16,7 @@ def booksortation(books: list) -> dict:
     :return: categorised and sorted books as a dict, where keys are categories and values are
     list of books that match this category. Lists should be sorted alphabetically.
     """
-    categor_books = {"spell books": [], "history books": [], "relics books": [], "potion books": [], "other books": []}
+    categor_books = {}
     for book in books:
         if is_spell_book(book):
             add_book_to_category(book, "spell books", categor_books)
@@ -28,22 +28,23 @@ def booksortation(books: list) -> dict:
             add_book_to_category(book, "potion books", categor_books)
         else:
             add_book_to_category(book, "other books", categor_books)
-    for key in tuple(categor_books):
-        if not categor_books[key]:
-            del categor_books[key]
     return categor_books
 
 
 def add_book_to_category(book: str, category: str, categorised_books: dict) -> dict:
     """
-    add
+    Add book to category.
+
     :param book:
     :param category:
     :param categorised_books:
     :return:
     """
-    x = categorised_books[category].append(book)
-    return x
+    if category in categorised_books:
+        categorised_books[category].append(book)
+    else:
+        categorised_books[category] = [book]
+    return categorised_books
 
 
 def is_spell_book(book: str) -> bool:
@@ -57,7 +58,7 @@ def is_spell_book(book: str) -> bool:
     :param book: given book as a string
     :return: True if given book is a spell book, False otherwise
     """
-    if book.startswith("*") and book.endswith("*"):
+    if book.startswith("*") and book.endswith("*") and len(book) > 1:
         return True
     else:
         return False
@@ -140,7 +141,7 @@ def is_potion_book(book: str) -> bool:
             c += 1
         else:
             pass
-    if c == v or c+1 == v or c-1 == v:
+    if c == v or c + 1 == v or c - 1 == v:
         return True
     else:
         return False
