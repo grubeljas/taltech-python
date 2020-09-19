@@ -28,6 +28,8 @@ def booksortation(books: list) -> dict:
             add_book_to_category(book, "potion books", categor_books)
         else:
             add_book_to_category(book, "other books", categor_books)
+    for category in categor_books:
+        categor_books[category].sort()
     return categor_books
 
 
@@ -76,19 +78,20 @@ def is_history_book(book: str) -> bool:
     :param book: given book as a string
     :return: True if given book is a history book, False otherwise
     """
-    if not book.isupper() and not book.islower():
+    if book.isnumeric() or not book.isalpha():
         return True
     books = book.split()
     for word in books:
-        for c in word:
-            if not c.isalpha():
-                del c
+        if word[0].isalpha():
+            if word[0].isupper():
+                pass
             else:
-                break
-        if not word[0].isupper():
-            return False
-        else:
-            pass
+                return False
+        elif word[0].isascii():
+            if word[1].isupper():
+                pass
+            else:
+                return False
     return True
 
 
@@ -152,3 +155,11 @@ def is_potion_book(book: str) -> bool:
         return True
     else:
         return False
+
+print(booksortation([
+    "*kana", "*kana*", "This Is A History Book", 'ThE StAfF', "rAiNiNg dUmPlInGs",
+    "6419(!/)/(!#=", 'The Banana Juice', "ThE sTaFf", "rAiNiNg DuMpLiNgS", 'The Green Liquid', "Aa", "AA", "Ab", "aB",
+    "aa", "ThAt s*TaFf", "ThAt s*tAfF", "ThAt  s*tAfF", "a", "baaa", "baaa", "", "   ", "QwEr1345%3tY",
+    "*A History Book", "*", "**", "A", "tHaT WaY ToO",
+    "1", "123"
+]))
