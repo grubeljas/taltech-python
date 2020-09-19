@@ -103,20 +103,12 @@ def is_relics_book(book: str) -> bool:
         book = book[1:]
     for i in book[::2]:
         if i.isalpha():
-            if i.isupper():
-                pass
-            else:
+            if not i.isupper():
                 return False
-        else:
-            pass
     for i in book[1::2]:
         if i.isalpha():
-            if i.islower():
-                pass
-            else:
-                return False
-        else:
-            pass
+            if not i.islower():
+                return True
     return True
 
 
@@ -152,6 +144,3 @@ def is_potion_book(book: str) -> bool:
         return True
     else:
         return False
-
-
-print(booksortation(["Bruh", "*j*"]))
