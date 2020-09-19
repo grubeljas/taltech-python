@@ -76,8 +76,15 @@ def is_history_book(book: str) -> bool:
     :param book: given book as a string
     :return: True if given book is a history book, False otherwise
     """
+    if not book.isupper() and not book.islower():
+        return True
     books = book.split()
     for word in books:
+        for c in word:
+            if not c.isalpha():
+                del c
+            else:
+                break
         if not word[0].isupper():
             return False
         else:
