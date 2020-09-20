@@ -78,7 +78,7 @@ def is_history_book(book: str) -> bool:
     :param book: given book as a string
     :return: True if given book is a history book, False otherwise
     """
-    if book.isnumeric() or not book.isalpha():
+    if book.isnumeric():
         return True
     books = book.split()
     for word in books:
@@ -156,10 +156,4 @@ def is_potion_book(book: str) -> bool:
     else:
         return False
 
-print(booksortation([
-    "*kana", "*kana*", "This Is A History Book", 'ThE StAfF', "rAiNiNg dUmPlInGs",
-    "6419(!/)/(!#=", 'The Banana Juice', "ThE sTaFf", "rAiNiNg DuMpLiNgS", 'The Green Liquid', "Aa", "AA", "Ab", "aB",
-    "aa", "ThAt s*TaFf", "ThAt s*tAfF", "ThAt  s*tAfF", "a", "baaa", "baaa", "", "   ", "QwEr1345%3tY",
-    "*A History Book", "*", "**", "A", "tHaT WaY ToO",
-    "1", "123"
-]))
+print(is_history_book("i Am Not A History book"))
