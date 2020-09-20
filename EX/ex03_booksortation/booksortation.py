@@ -78,7 +78,8 @@ def is_history_book(book: str) -> bool:
     :param book: given book as a string
     :return: True if given book is a history book, False otherwise
     """
-    if book.isnumeric() or not book.isalnum():
+    lowbook = book.lower()
+    if not lowbook.islower():
         return True
     books = book.split()
     for word in books:
@@ -159,28 +160,3 @@ def is_potion_book(book: str) -> bool:
         return True
     else:
         return False
-
-print("======must return True:========")
-print(is_spell_book('*kana*'))
-print(is_history_book('This Is A History Book'))
-print(is_history_book("6419(!/)/(!#="))
-print(is_history_book("*A History Book"))
-print(is_history_book("*"))
-print(is_history_book("1234"))
-print(is_history_book(""))  # => True
-print(is_relics_book('ThE StAfF'))
-print(is_relics_book("rAiNiNg dUmPlInGs"))
-print(is_relics_book("6419(!/)/(!#="))
-print(is_relics_book("A"))
-print(is_relics_book(""))
-print(is_relics_book(""))  # => True
-print(is_potion_book('The Banana Juice'))
-print(is_potion_book('The tomato potion'))
-print(is_potion_book(""))  # => True
-print("======must return False:========")
-print(is_spell_book(""))  # => False
-print(is_potion_book('The Green Liquid'))  # False
-print(is_relics_book("ThAt  s*tAfF")) # False
-print(is_relics_book("ThAt  sTaFf")) # False
-print(is_relics_book("ThE sTaFf"))  # False
-print(is_relics_book("rAiNiNg DuMpLiNgS"))  # False
