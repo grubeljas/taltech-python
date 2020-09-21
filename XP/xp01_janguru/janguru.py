@@ -9,7 +9,7 @@ def meet_me(pos1, jump_distance1, sleep1, pos2, jump_distance2, sleep2) -> int:
         return -1
     elif sleep1 == sleep2 and pos1 != pos2 and jump_distance1 == jump_distance2:
         return -1
-    else:
+    if pos1 < 1000 and pos2 < 1000 and jump_distance1 < 100 and jump_distance2 < 100 and sleep1 < 100 and sleep2 < 100:
         time = 0
         while time < 1000000:
             a = time // sleep1 + 1
@@ -19,21 +19,36 @@ def meet_me(pos1, jump_distance1, sleep1, pos2, jump_distance2, sleep2) -> int:
             if distance1 == distance2:
                 return distance1
             time += 1
+    else:
+        if sleep1 > sleep2:
+            sleep1, sleep2 = sleep2, sleep1
+            jump_distance1, jump_distance2 = jump_distance2, jump_distance1
+            pos1, pos2 = pos2, pos1
+        time = 0
+        kord = sleep2 // sleep1
+        jaak = sleep2 % sleep1
+        a = jump_distance1 / sleep1
+        b = jump_distance2 / sleep2
+        distance1 = int(a * time + pos1 + jump_distance1 - (time % sleep1 * a))
+        distance2 = int(b * time + pos2 + jump_distance2 - (time % sleep2 * b))
+        if distance1 == distance2:
+            return distance1
+        while time < 1000000000000:
+            for i in range(kord):
+                time += sleep1
+                a = jump_distance1 / sleep1
+                b = jump_distance2 / sleep2
+                distance1 = int(a * time + pos1 + jump_distance1 - (time % sleep1 * a))
+                distance2 = int(b * time + pos2 + jump_distance2 - (time % sleep2 * b))
+                if distance1 == distance2:
+                    return distance1
+            time += jaak
+            a = jump_distance1 / sleep1
+            b = jump_distance2 / sleep2
+            distance1 = int(a * time + pos1 + jump_distance1 - (time % sleep1 * a))
+            distance2 = int(b * time + pos2 + jump_distance2 - (time % sleep2 * b))
+            if distance1 == distance2:
+                return distance1
         else:
             return -1
     
-
-if __name__ == "__main__":
-    print(str(meet_me(1, 2, 1, 2, 1, 1)) + " expected:  3")
-    print(str(meet_me(1, 2, 1, 1, 2, 1)) + " expected:  3")
-    print(str(meet_me(1, 2, 3, 4, 5, 5)) + " expected: -1")
-    print(str(meet_me(10, 7, 7, 5, 8, 6)) + " expected: 45")
-    print(str(meet_me(0, 2, 1, 2, 1, 1)) + " expected:  4")
-    print(str(meet_me(1, 6, 1, 14, 5, 1)) + " expected: 79")
-    print(str(meet_me(100, 7, 4, 300, 8, 6)) + " expected:940")
-    print(str(meet_me(1, 7, 1, 15, 5, 1)) + " expected: 50")
-    print(str(meet_me(0, 1, 1, 1, 1, 1)) + " expected: -1")
-    print(str(meet_me(3, 5, 10, 4, 1, 2)) + " expected: 8")
-    print(str(meet_me(1, 3, 2, 1, 2, 1)) + " expected: 7")
-    print(str(meet_me(0, 15, 6, 5, 5, 3)) + " expected: 15")
-    print(str(meet_me(100000, 21, 2, 0, 11, 1)) + " expected: 2200000")
