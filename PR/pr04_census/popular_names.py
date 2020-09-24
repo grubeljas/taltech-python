@@ -102,10 +102,10 @@ def names_by_popularity(names_dict: dict) -> str:
     bruh = list(names_dict)
     string = ""
     if names_dict == {}:
-        return string
+        return "Empty dictionary."
     if bruh[0].endswith(":F") or bruh[0].endswith(":M"):
-        for key in names_dict:
-            nkey = key[:]
+        for key in bruh:
+            nkey = key[:-2]
             names_dict[nkey] = names_dict.pop(key)
     for i in range(len(names_dict)):
         name = most_popular(names_dict)
