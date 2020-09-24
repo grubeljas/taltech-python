@@ -31,7 +31,7 @@ def to_dictionary(names: list) -> dict:
     return name_counter
 
 
-def to_sex_dicts(names_dict: dict) -> dict:
+def to_sex_dicts(names_dict: dict) -> tuple:
     """
     Divide the names by sex to 2 different dictionaries.
 
@@ -59,6 +59,9 @@ def most_popular(names_dict: dict) -> str:
     :return: string
     """
     a = 0
+    b = ""
+    if names_dict == {}:
+        return ""
     for key, value in names_dict.items():
         if value > a:
             a = value
@@ -80,7 +83,7 @@ def number_of_people(names_dict: dict) -> int:
 
 
 def names_by_popularity(names_dict: dict) -> str:
-    """
+    r"""
     Create a string used to print the names by popularity.
 
     Format:
@@ -97,28 +100,16 @@ def names_by_popularity(names_dict: dict) -> str:
     :return: string
     """
     bruh = list(names_dict)
+    string = ""
+    if names_dict == {}:
+        return string
     if bruh[0].endswith(":F") or bruh[0].endswith(":M"):
         for key in names_dict:
             nkey = key[:]
             names_dict[nkey] = names_dict.pop(key)
-    string = ""
     for i in range(len(names_dict)):
         name = most_popular(names_dict)
         amount = names_dict.get(name)
         string += f"{i + 1}. {name}: {amount} \n"
         names_dict.pop(name)
     return string
-
-
-if __name__ == '__main__':
-    example_names = ("Kati:F\n" * 1000 + "Mati:M\n" * 800 + "Mari:F\n" * 600 + "Tõnu:M\n" * 400).rstrip("\n").split("\n")
-    people = to_dictionary(example_names)
-    print(people)  # -> {'Kati:F': 1000, 'Mati:M': 800, 'Mari:F': 600, 'Tõnu:M': 400}
-    male_names, female_names = to_sex_dicts(people)
-    print(male_names)  # -> {'Mati': 800, 'Tõnu': 400}
-    print(female_names)  # -> {'Kati': 1000, 'Mari': 600}
-    print(most_popular(male_names))  # -> "Mati"
-    print(number_of_people(people))  # -> 2800
-    print(names_by_popularity(male_names))  # ->   1. Mati: 800
-#                                                  2. Tõnu: 400
-#                                                  (empty line)
