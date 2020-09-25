@@ -105,22 +105,10 @@ def names_by_popularity(names_dict: dict) -> str:
     if bruh[0].endswith(":F") or bruh[0].endswith(":M"):
         for key in bruh:
             names_dict[key[:-2]] = names_dict.pop(key)
+    sorted(names_dict, )
     for i in range(len(names_dict)):
         name = most_popular(names_dict)
         amount = names_dict.get(name)
-        string += f"{i + 1}. {name}: {amount} \n"
+        string += f"{i + 1}. {name}: {amount}\n"
         names_dict.pop(name)
     return string
-
-
-if __name__ == '__main__':
-    people = to_dictionary(read_from_file())
-    print(people)  # -> {'Kati:F': 1000, 'Mati:M': 800, 'Mari:F': 600, 'Tõnu:M': 400}
-    male_names, female_names = to_sex_dicts(people)
-    print(male_names)  # -> {'Mati': 800, 'Tõnu': 400}
-    print(female_names)  # -> {'Kati': 1000, 'Mari': 600}
-    print(most_popular(male_names))  # -> "Mati"
-    print(number_of_people(people))  # -> 2800
-    print(names_by_popularity(male_names))  # ->   1. Mati: 800
-#                                                  2. Tõnu: 400
-#                                                  (empty line)
