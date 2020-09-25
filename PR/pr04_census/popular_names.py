@@ -23,11 +23,11 @@ def to_dictionary(names: list) -> dict:
     """
     name_counter = {}
     number = 1
-    for element in names:
-        if element not in name_counter:
-            name_counter[element] = number
+    for name in names:
+        if name not in name_counter:
+            name_counter[name] = number
         else:
-            name_counter[element] = name_counter[element] + 1
+            name_counter[name] = name_counter[name] + 1
     return name_counter
 
 
@@ -59,9 +59,8 @@ def most_popular(names_dict: dict) -> str:
     :return: string
     """
     a = 0
-    b = ""
     if names_dict == {}:
-        return ""
+        return "Empty dictionary."
     for key, value in names_dict.items():
         if value > a:
             a = value
@@ -102,14 +101,26 @@ def names_by_popularity(names_dict: dict) -> str:
     bruh = list(names_dict)
     string = ""
     if names_dict == {}:
-        return "Empty dictionary."
+        return ""
     if bruh[0].endswith(":F") or bruh[0].endswith(":M"):
         for key in bruh:
-            nkey = key[:-2]
-            names_dict[nkey] = names_dict.pop(key)
+            names_dict[key[:-2]] = names_dict.pop(key)
     for i in range(len(names_dict)):
         name = most_popular(names_dict)
         amount = names_dict.get(name)
         string += f"{i + 1}. {name}: {amount} \n"
         names_dict.pop(name)
     return string
+
+
+if __name__ == '__main__':
+    people = to_dictionary(read_from_file())
+    print(people)  # -> {'Kati:F': 1000, 'Mati:M': 800, 'Mari:F': 600, 'Tõnu:M': 400}
+    male_names, female_names = to_sex_dicts(people)
+    print(male_names)  # -> {'Mati': 800, 'Tõnu': 400}
+    print(female_names)  # -> {'Kati': 1000, 'Mari': 600}
+    print(most_popular(male_names))  # -> "Mati"
+    print(number_of_people(people))  # -> 2800
+    print(names_by_popularity(male_names))  # ->   1. Mati: 800
+#                                                  2. Tõnu: 400
+#                                                  (empty line)
