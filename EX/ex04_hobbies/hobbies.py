@@ -51,7 +51,9 @@ def find_person_with_most_hobbies(file):
         if len(value) > a:
             a = len(value)
             active_person = [nam]
-        elif value == a:
+            print(a)
+        elif len(value) == a:
+            print(a)
             active_person.append(nam)
     return active_person
 
@@ -71,7 +73,7 @@ def find_person_with_least_hobbies(file):
         if len(value) < a:
             a = len(value)
             passive_person = [name]
-        elif value == a:
+        elif len(value) == a:
             passive_person.append(name)
     return passive_person
 
