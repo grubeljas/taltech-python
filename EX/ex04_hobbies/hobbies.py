@@ -46,7 +46,7 @@ def find_person_with_most_hobbies(file):
     name_dictionary = create_dictionary(file)
     a = 0
     if name_dictionary == {}:
-        return "Empty dictionary."
+        return []
     for name, value in name_dictionary.items():
         if len(value) > a:
             a = len(value)
@@ -64,7 +64,7 @@ def find_person_with_least_hobbies(file):
     name_dictionary = create_dictionary(file)
     a = 100
     if name_dictionary == {}:
-        return "Empty dictionary."
+        return []
     for name, value in name_dictionary.items():
         if len(value) < a:
             a = len(value)
