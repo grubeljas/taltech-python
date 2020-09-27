@@ -47,12 +47,12 @@ def find_person_with_most_hobbies(file):
     a = 0
     if name_dictionary == {}:
         return []
-    for name, value in name_dictionary.items():
+    for nam, value in name_dictionary.items():
         if len(value) > a:
             a = len(value)
-            active_person = [name]
+            active_person = [nam]
         elif value == a:
-            active_person.append(name)
+            active_person.append(nam)
     return active_person
 
 
