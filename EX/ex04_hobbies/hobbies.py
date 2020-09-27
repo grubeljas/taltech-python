@@ -98,7 +98,7 @@ def find_most_popular_hobby(file):
             hobby = [name]
         if value == a:
             hobby.append(name)
-    hobby = sorted(list(set(hobby)))
+    hobby = list(set(hobby))
     return hobby
 
 
