@@ -9,7 +9,7 @@ def create_list_from_file(file):
     :param file: original file path
     :return: list of lines
     """
-    with open("hobbies_database.txt", encoding='utf-8') as file:
+    with open(file, encoding='utf-8') as file:
         collected_data = file.readlines()
     return collected_data
 
@@ -46,11 +46,13 @@ def find_person_with_most_hobbies(file):
     name_dictionary = create_dictionary(file)
     a = 0
     if name_dictionary == {}:
-        return "Empty dictionary."
+        return []
     for name, value in name_dictionary.items():
         if len(value) > a:
             a = len(value)
-            active_person = name
+            active_person = [name]
+        elif value == a:
+            active_person.append(name)
     return active_person
 
 
@@ -64,11 +66,13 @@ def find_person_with_least_hobbies(file):
     name_dictionary = create_dictionary(file)
     a = 100
     if name_dictionary == {}:
-        return "Empty dictionary."
+        return []
     for name, value in name_dictionary.items():
         if len(value) < a:
             a = len(value)
-            passive_person = name
+            passive_person = [name]
+        elif value == a:
+            passive_person.append(name)
     return passive_person
 
 
@@ -92,9 +96,8 @@ def find_most_popular_hobby(file):
         if value > a:
             a = value
             hobby = [name]
-        if value == a:
+        elif value == a:
             hobby.append(name)
-    hobby = sorted(list(set(hobby)))
     return hobby
 
 
@@ -118,9 +121,8 @@ def find_least_popular_hobby(file):
         if value < a:
             a = value
             hobby = [name]
-        if value == a:
+        elif value == a:
             hobby.append(name)
-    hobby = list(set(hobby))
     return hobby
 
 
@@ -131,8 +133,10 @@ def write_corrected_database(file, file_to_write):
     :param file: original file path
     :param file_to_write: file to write result
     """
-    name_dictionary = sorted(create_dictionary(file).items())
-    print(name_dictionary)
+    name_dictionary = create_dictionary(file)
+    for listt in name_dictionary.values():
+        listt.sort()
+    name_dictionary = sorted(name_dictionary.items())
     with open(file_to_write, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter=',')
         name = "Name"
@@ -140,28 +144,3 @@ def write_corrected_database(file, file_to_write):
         writer.writerow([name, hobbies])
         for element in name_dictionary:
             writer.writerow([element[0], '-'.join(element[1])])
-
-# These examples are based on a given text file from the exercise.
-
-
-if __name__ == '__main__':
-    dic = create_dictionary("hobbies_database.txt")
-    print(len(create_list_from_file("hobbies_database.txt")))  # -> 100
-    print("Check presence of hobbies for chosen person:")
-    print("shopping" in dic["Wendy"])  # -> True
-    print("fitness" in dic["Sophie"])  # -> False
-    print("gaming" in dic["Peter"])  # -> True
-    print("Check if hobbies - person relation is correct:")
-    print("Check if a person(people) with the biggest amount of hobbies is(are) correct:")
-    print(find_person_with_most_hobbies("hobbies_database.txt"))  # -> ['Jack']
-    print(len(dic["Jack"]))  # ->  12
-    print(len(dic["Carmen"]))  # -> 10
-    print("Check if a person(people) with the smallest amount of hobbies is(are) correct:")
-    print(find_person_with_least_hobbies("hobbies_database.txt"))  # -> ['Molly']
-    print(len(dic["Molly"]))  # -> 5
-    print(len(dic["Sophie"]))  # -> 7
-    print("Check if the most popular hobby(ies) is(are) correct")
-    print(find_most_popular_hobby("hobbies_database.txt"))  # -> ['gaming', 'sport', 'football']
-    print("Check if the least popular hobby(ies) is(are) correct")
-    print(find_least_popular_hobby("hobbies_database.txt"))  # -> ['tennis', 'dance', 'puzzles', 'flowers']
-    write_corrected_database("hobbies_database.txt", 'correct_hobbies_database.csv')
