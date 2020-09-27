@@ -9,7 +9,7 @@ def create_list_from_file(file):
     :param file: original file path
     :return: list of lines
     """
-    with open("hobbies_database.txt", encoding='utf-8') as file:
+    with open(file, encoding='utf-8') as file:
         collected_data = file.readlines()
     return collected_data
 
