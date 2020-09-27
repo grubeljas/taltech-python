@@ -50,7 +50,9 @@ def find_person_with_most_hobbies(file):
     for name, value in name_dictionary.items():
         if len(value) > a:
             a = len(value)
-            active_person = name
+            active_person = [name]
+        if value == a:
+            active_person.append(name)
     return active_person
 
 
@@ -68,7 +70,9 @@ def find_person_with_least_hobbies(file):
     for name, value in name_dictionary.items():
         if len(value) < a:
             a = len(value)
-            passive_person = name
+            passive_person = [name]
+        if value == a:
+            passive_person.append(name)
     return passive_person
 
 
