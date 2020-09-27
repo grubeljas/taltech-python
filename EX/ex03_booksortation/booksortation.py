@@ -28,8 +28,6 @@ def booksortation(books: list) -> dict:
             add_book_to_category(book, "potion books", categor_books)
         else:
             add_book_to_category(book, "other books", categor_books)
-    for category in categor_books:
-        categor_books[category].sort()
     return categor_books
 
 
