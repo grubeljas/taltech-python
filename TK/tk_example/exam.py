@@ -65,12 +65,7 @@ def without_end(s):
     :param s: String
     :return: String without first and last char.
     """
-    if len(s) > 2:
-        s = s[1:]
-        s = s[:-1]
-        return s
-    if len(s) == 2:
-        return ""
+    pass
 
 
 def index_index_value(nums):
@@ -131,6 +126,7 @@ def mirror_ends(s):
         else:
             break
     return mirror
+
 
 s = "1" + "0" * 100000000 + "1"
 print(without_end('Hello'))
