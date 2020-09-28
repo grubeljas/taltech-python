@@ -66,7 +66,8 @@ def without_end(s):
     :return: String without first and last char.
     """
     if len(s) > 2:
-        s = s[1:-1]
+        s = s[1:]
+        s = s[:-1]
         return s
     if len(s) == 2:
         return ""
@@ -130,3 +131,8 @@ def mirror_ends(s):
         else:
             break
     return mirror
+
+s = "1" + "0" * 100000000 + "1"
+print(without_end('Hello'))
+print(without_end('java'))
+print(without_end(s))
