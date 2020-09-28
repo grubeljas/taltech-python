@@ -15,9 +15,11 @@ def common_end(a, b):
     :return: The last or the first elements are the same.
     """
     if a[0] == b[0]:
-        return a[0]
+        return True
     elif a[-1] == b[-1]:
-        return a[-1]
+        return True
+    else:
+        return False
 
 
 def alarm_clock(day, vacation):
@@ -44,9 +46,9 @@ def alarm_clock(day, vacation):
     off = "off"
     if day in range(5) and not vacation:
         return eight
-    if day in range(5) and vacation or day in range(5, 6) and not vacation:
+    if day in range(5) and vacation or day in range(5, 7) and not vacation:
         return ten
-    if day in range(5, 6) and vacation:
+    if day in range(5, 7) and vacation:
         return off
 
 
@@ -63,11 +65,11 @@ def without_end(s):
     :param s: String
     :return: String without first and last char.
     """
-    if len(s) >= 4:
+    if len(s) > 2:
         s = s[1:-1]
         return s
-    else:
-        return s
+    if len(s) == 2:
+        return ""
 
 
 def index_index_value(nums):
