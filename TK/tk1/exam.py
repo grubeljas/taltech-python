@@ -91,8 +91,15 @@ def last_indices_elements_sum(nums):
     :param nums: List of non-negative integers.
     :return: Sum of elements at indices of last two elements.
     """
-    first = nums[nums[-1]]
-    second = nums[nums[-2]]
+    try:
+        first = nums[nums[-1]]
+        second = nums[nums[-2]]
+    except IndexError:
+        first = 0
+    try:
+        second = nums[nums[-2]]
+    except IndexError:
+        second = 0
     summa = first + second
     return summa
 
@@ -110,7 +117,7 @@ def max_duplicate(nums):
     :param nums: List of integers
     :return: Maximum element with duplicate. None if no duplicate found.
     """
-    a = -1
+    a = -10000
     for i in nums:
         nums.remove(i)
         if i in nums:
