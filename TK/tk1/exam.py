@@ -117,13 +117,12 @@ def max_duplicate(nums):
     :return: Maximum element with duplicate. None if no duplicate found.
     """
     a = -10000
-    for i in nums:
-        nums.remove(i)
+    n = nums
+    for i in n[:]:
+        n.remove(i)
         if i in nums:
             if i > a:
                 a = i
     if a == -10000:
         return None
     return a
-
-print(max_duplicate([1, 2, 10]))
