@@ -1,6 +1,4 @@
-"""
-EX05 - OEE
-"""
+"""OEE."""
 import csv
 
 
@@ -9,9 +7,7 @@ def read_production_data(filename: str) -> dict:
     Open the file in the provided path, read in values and return them as a dictionary,
     where the key is the machine name and value is a list of integers for the production data for each shift.
 
-    {
     'Machine Name': [Run Time (minutes), Ideal Run Rate (pcs/min), Total Count (pcs), Good Count (pcs)]
-    }
 
     :param filename: string file path for the CSV file to be read
     :return: dictionary with the production data per machine
@@ -30,6 +26,7 @@ def read_production_data(filename: str) -> dict:
 def calculate_quality(production_data: dict) -> dict:
     """
     Go through the input dictionary and for each machine, calculate the Quality percentage (as a float, e.g. 98.1).
+
     Save each value in a new dictionary, where the key is the machine name and value is the calculated Quality.
     Return the newly created dictionary.
 
@@ -43,7 +40,7 @@ def calculate_quality(production_data: dict) -> dict:
         if total_count == 0:
             quality_dict[machine] = 0.0
             continue
-        quality = (good_count/total_count) * 100
+        quality = (good_count / total_count) * 100
         quality_dict[machine] = round(quality, 1)
     return quality_dict
 
@@ -51,6 +48,7 @@ def calculate_quality(production_data: dict) -> dict:
 def calculate_availability(production_data: dict) -> dict:
     """
     Go through the input dictionary and for each machine, calculate the Availability percentage (as a float, e.g. 98.1).
+
     Save each value in a new dictionary, where the key is the machine name and value is the calculated Availability.
     Return the newly created dictionary.
 
@@ -69,6 +67,7 @@ def calculate_availability(production_data: dict) -> dict:
 def calculate_performance(production_data: dict) -> dict:
     """
     Go through the input dictionary and for each machine, calculate the Performance percentage (as a float, e.g. 98.1).
+
     Save each value in a new dictionary, where the key is the machine name and value is the calculated Performance.
     Return the newly created dictionary.
 
@@ -90,7 +89,8 @@ def calculate_performance(production_data: dict) -> dict:
 
 def calculate_oee(production_data: dict) -> dict:
     """
-    Using the previously defined functions, calculate the final OEE percentage for each machine.
+    Use the previously defined functions, calculate the final OEE percentage for each machine.
+
     Save each value in a new dictionary, where the key is the machine name and value is the calculated Performance.
     Return the newly created dictionary.
 
