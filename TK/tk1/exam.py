@@ -93,7 +93,6 @@ def last_indices_elements_sum(nums):
     """
     try:
         first = nums[nums[-1]]
-        second = nums[nums[-2]]
     except IndexError:
         first = 0
     try:
@@ -123,6 +122,8 @@ def max_duplicate(nums):
         if i in nums:
             if i > a:
                 a = i
-    if a == -1:
+    if a == -10000:
         return None
     return a
+
+print(max_duplicate([1, 2, 10]))
