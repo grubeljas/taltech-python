@@ -4,7 +4,8 @@ import csv
 
 def read_production_data(filename: str) -> dict:
     """
-    Open the file in the provided path, read in values and return them as a dictionary,
+    Open the file in the provided path, read in values and return them as a dictionary.
+
     where the key is the machine name and value is a list of integers for the production data for each shift.
 
     'Machine Name': [Run Time (minutes), Ideal Run Rate (pcs/min), Total Count (pcs), Good Count (pcs)]
