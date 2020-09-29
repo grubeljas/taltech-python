@@ -17,10 +17,13 @@ def read_production_data(filename: str) -> dict:
     :return: dictionary with the production data per machine
     """
     son = {}
-    with open(filename) as csv_file:
-        csv_reader = csv.reader(csv_file, delimiter=',')
-        for row in csv_reader:
-            son[row[0]] = [int(row[1]), int(row[2]), int(row[3]), int(row[4])]
+    try:
+        with open(filename) as csv_file:
+            csv_reader = csv.reader(csv_file, delimiter=',')
+            for row in csv_reader:
+                son[row[0]] = [int(row[1]), int(row[2]), int(row[3]), int(row[4])]
+            return son
+    except FileNotFoundError:
         return son
 
 
@@ -43,7 +46,6 @@ def calculate_quality(production_data: dict) -> dict:
         quality = (good_count/total_count) * 100
         quality_dict[machine] = round(quality, 1)
     return quality_dict
-
 
 
 def calculate_availability(production_data: dict) -> dict:
@@ -116,92 +118,10 @@ def write_results_to_file(production_data: dict, filename: str):
     """
     quality = calculate_quality(production_data)
     performance = calculate_performance(production_data)
-    availability = calculate_performance(production_data)
+    availability = calculate_availability(production_data)
     oee = calculate_oee(production_data)
     with open(filename, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter=',')
         writer.writerow(["Liin", "Saadavus", "Tootlus", "Kvaliteet", "OEE"])
         for machine, numbers in production_data.items():
             writer.writerow([machine, availability[machine], performance[machine], quality[machine], oee[machine]])
-
-
-
-
-if __name__ == '__main__':
-    prod_data = read_production_data("reedene_vahetus.csv")
-    print('\n- Production data -')
-    print('[Run Time (minutes), Ideal Run Rate (pcs/min), Total Count (pcs), Good Count (pcs)]')
-    for key, value in prod_data.items():
-        print(f"{key}: {value}")
-
-    # Sildistaja: [358, 57, 18602, 18388]
-    # Hapukurgipurgitaja: [415, 12, 4800, 2013]
-    # Autoklaav: [450, 10, 4500, 4500]
-    # Supivillija: [402, 36, 14230, 14214]
-    # Makaronikeetja: [410, 25, 10230, 10230]
-    # Kartulikoorija: [420, 111, 46620, 44123]
-    # Mahlapress: [0, 0, 0, 0]
-
-    quality_dict = calculate_quality(prod_data)
-    print('\n- Quality calculation results -')
-    for key, value in quality_dict.items():
-        print(f"{key}: {value}")
-
-    # Sildistaja: 98.8
-    # Hapukurgipurgitaja: 41.9
-    # Autoklaav: 100.0
-    # Supivillija: 99.9
-    # Makaronikeetja: 100.0
-    # Kartulikoorija: 94.6
-    # Mahlapress: 0.0
-
-    availability_dict = calculate_availability(prod_data)
-    print('\n- Availability calculation results -')
-    for key, value in availability_dict.items():
-        print(f"{key}: {value}")
-
-    # Sildistaja: 85.2
-    # Hapukurgipurgitaja: 98.8
-    # Autoklaav: 107.1
-    # Supivillija: 95.7
-    # Makaronikeetja: 97.6
-    # Kartulikoorija: 100.0
-    # Mahlapress: 0.0
-
-    performance_dict = calculate_performance(prod_data)
-    print('\n- Performance calculation results -')
-    for key, value in performance_dict.items():
-        print(f"{key}: {value}")
-
-    # Sildistaja: 91.2
-    # Hapukurgipurgitaja: 96.4
-    # Autoklaav: 100.0
-    # Supivillija: 98.3
-    # Makaronikeetja: 99.8
-    # Kartulikoorija: 100.0
-    # Mahlapress: 0.0
-
-    oee_dict = calculate_oee(prod_data)
-    print('\n- Total OEE calculation results -')
-    for key, value in oee_dict.items():
-        print(f"{key}: {value}")
-
-    # Sildistaja: 76.8
-    # Hapukurgipurgitaja: 39.9
-    # Autoklaav: 107.1
-    # Supivillija: 94.0
-    # Makaronikeetja: 97.4
-    # Kartulikoorija: 94.6
-    # Mahlapress: 0.0
-
-    write_results_to_file(prod_data, 'reedene_oee.csv')
-
-    # contents of 'reedene_oee.csv':
-    # Liin, Saadavus, Tootlus, Kvaliteet, OEE
-    # Sildistaja, 85.2, 91.2, 98.8, 76.8
-    # Hapukurgipurgitaja, 98.8, 96.4, 41.9, 39.9
-    # Autoklaav, 107.1, 100.0, 100.0, 107.1
-    # Supivillija, 95.7, 98.3, 99.9, 94.0
-    # Makaronikeetja, 97.6, 99.8, 100.0, 97.4
-    # Kartulikoorija, 100.0, 100.0, 94.6, 94.6
-    # Mahlapress, 0.0, 0.0, 0.0, 0.0
