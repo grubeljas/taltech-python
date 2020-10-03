@@ -55,6 +55,7 @@ def sort_by_popularity(tweets: list) -> list:
     :param tweets: Input list of tweets.
     :return: List of tweets by popularity
     """
+    tweets.sort(key=lambda x: x.time)
     tweets.sort(key=lambda x: x.retweets, reverse=True)
     return tweets
 
@@ -101,7 +102,15 @@ def sort_hashtags_by_popularity(tweets: list) -> list:
                 hashtags[match.group()] += tweet.retweets
             else:
                 hashtags[match.group()] = tweet.retweets
-    nhash = sorted(hashtags.items(), key=lambda x: x[1], reverse=True)
+    flipped = {}
+    for key, value in hashtags.items():
+        if value not in flipped:
+            flipped[value] = [key]
+        else:
+            flipped[value].append(key)
+    nhash = sorted(flipped.items(), key=lambda x: x[1], reverse=True)
     for tegs in nhash:
-        tagslist.append(tegs[0])
+        bruh = sorted(tegs[1])
+        for teg in bruh:
+            tagslist.append(teg)
     return tagslist
