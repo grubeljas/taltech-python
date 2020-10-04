@@ -55,7 +55,7 @@ def write_message(user: User, chat: Chat, content: str) -> None:
     """
     if user in chat.users:
         new_message = Message(user, content)
-        chat.messages.append(new_message.content)
+        chat.messages.append(new_message)
 
 
 def delete_message(chat: Chat, message: Message) -> None:
@@ -90,7 +90,8 @@ def react_to_last_message(chat: Chat) -> None:
 
     :param chat: Chat in which the message is.
     """
-    chat.messages[-1].reactions += 1
+    if chat.messages != []:
+        chat.messages[-1].reactions += 1
 
 
 def find_most_reacted_message(chat: Chat) -> Message:
@@ -102,7 +103,7 @@ def find_most_reacted_message(chat: Chat) -> Message:
     """
     a = 0
     for message in chat.messages:
-        if message > a:
+        if message.reactions > a:
             a = message.reactions
             b = message
     return b
@@ -134,10 +135,3 @@ def count_reactions_by_chat(chats: list) -> dict:
         number = count_reactions_in_chat(chat)
         statistics[chat.name] = number
     return statistics
-
-
-user1 = User("Pavel")
-chat = Chat("bl", [user1])
-mess = Message(user1, "blja")
-write_message(user1, chat, "hmm")
-print(chat.messages)
