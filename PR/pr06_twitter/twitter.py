@@ -92,17 +92,17 @@ def sort_hashtags_by_popularity(tweets: list) -> list:
     :return: List of hashtags by popularity.
     """
     hashtags = {}
-    tagslist = []
     seclist = []
     for tweet in tweets:
         text = tweet.content
         pattern = r"#\w+"
         match = re.search(pattern, text)
         if match:
-            if match.group() in hashtags:
-                hashtags[match.group()] += tweet.retweets
-            else:
-                hashtags[match.group()] = tweet.retweets
+            for i in re.findall(pattern, text):
+                if i in hashtags:
+                    hashtags[i] += tweet.retweets
+                else:
+                    hashtags[i] = tweet.retweets
     sorted_list = sorted(hashtags.items(), key=lambda x: x[0])
     sorted_list = sorted(sorted_list, key=lambda x: x[1], reverse=True)
     for i in sorted_list:
