@@ -111,8 +111,20 @@ def sort_hashtags_by_popularity(tweets: list) -> list:
             flipped[value].append(key)
     for k, v in flipped.items():
         v.sort()
-    sorted_hashtags = sorted(flipped.items(), key=lambda x: x[1], reverse=True)
+    sorted_hashtags = sorted(flipped.items(), key=lambda x: x[0], reverse=True)
     for value in sorted_hashtags:
         for hashtag in value[1]:
             bruh.append(hashtag)
     return bruh
+
+if __name__ == '__main__':
+    tweet1 = Tweet("@realDonaldTrump", "Despite the negative press covfefe #bigsmart", 1249, 54303)
+    tweet2 = Tweet("@elonmusk", "Technically, alcohol is a solution #bigs", 366.4, 166500)
+    tweet3 = Tweet("@CIA", "We can neither confirm nor deny that this is our first tweet. #heart", 2192, 284200)
+    tweets = [tweet1, tweet2, tweet3]
+
+    print(find_fastest_growing(tweets).user)  # -> "@elonmusk"
+
+
+    sorted_hashtags = sort_hashtags_by_popularity(tweets)
+    print(sorted_hashtags)  # -> "#heart"
