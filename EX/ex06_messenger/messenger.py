@@ -53,8 +53,9 @@ def write_message(user: User, chat: Chat, content: str) -> None:
     :param chat: Chat to write the message to.
     :param content: Content of the message.
     """
-    new_message = Message(user, content)
-    chat.messages.append(new_message)
+    if user in chat.users:
+        new_message = Message(user, content)
+        chat.messages.append(new_message.content)
 
 
 def delete_message(chat: Chat, message: Message) -> None:
@@ -133,3 +134,10 @@ def count_reactions_by_chat(chats: list) -> dict:
         number = count_reactions_in_chat(chat)
         statistics[chat.name] = number
     return statistics
+
+
+user1 = User("Pavel")
+chat = Chat("bl", [user1])
+mess = Message(user1, "blja")
+write_message(user1, chat, "hmm")
+print(chat.messages)
