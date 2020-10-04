@@ -92,7 +92,9 @@ def sort_hashtags_by_popularity(tweets: list) -> list:
     :return: List of hashtags by popularity.
     """
     hashtags = {}
-    tagslist = []
+    sorted_hashtags = []
+    flipped = {}
+    bruh = []
     for tweet in tweets:
         text = tweet.content
         pattern = r"#\w+"
@@ -102,15 +104,15 @@ def sort_hashtags_by_popularity(tweets: list) -> list:
                 hashtags[match.group()] += tweet.retweets
             else:
                 hashtags[match.group()] = tweet.retweets
-    flipped = {}
     for key, value in hashtags.items():
         if value not in flipped:
             flipped[value] = [key]
         else:
             flipped[value].append(key)
-    nhash = sorted(flipped.items(), key=lambda x: x[1], reverse=True)
-    for tegs in nhash:
-        bruh = sorted(tegs[1])
-        for teg in bruh:
-            tagslist.append(teg)
-    return tagslist
+    for k, v in flipped.items():
+        v = v.sort()
+    sorted_hashtags = sorted(flipped.items(), key=lambda x: x[1], reverse=True)
+    for value in sorted_hashtags:
+        for hashtag in value[1]:
+            bruh.append(hashtag)
+    return bruh
