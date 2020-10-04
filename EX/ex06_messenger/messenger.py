@@ -103,7 +103,7 @@ def find_most_reacted_message(chat: Chat) -> Message:
     """
     a = 0
     for message in chat.messages:
-        if message.reactions > a:
+        if message.reactions >= a:
             a = message.reactions
             b = message
     return b
@@ -119,6 +119,7 @@ def count_reactions_in_chat(chat: Chat) -> int:
     counter = 0
     for message in chat.messages:
         counter += message.reactions
+    return counter
 
 
 def count_reactions_by_chat(chats: list) -> dict:
