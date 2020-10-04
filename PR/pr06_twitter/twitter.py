@@ -110,7 +110,7 @@ def sort_hashtags_by_popularity(tweets: list) -> list:
         else:
             flipped[value].append(key)
     for k, v in flipped.items():
-        v = v.sort()
+        v.sort()
     sorted_hashtags = sorted(flipped.items(), key=lambda x: x[1], reverse=True)
     for value in sorted_hashtags:
         for hashtag in value[1]:
