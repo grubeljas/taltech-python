@@ -58,9 +58,8 @@ class Train:
         :param passengers:
         :return:
         """
-        self._passengers = passengers
         a = 0
-        for i in range(len(self._passengers)):
+        for i in range(len(passengers)):
             a += 1
         return a
 
@@ -78,7 +77,7 @@ class Train:
         for person in self.passengers:
             nums = person.seat.split("-")
             if int(nums[0]) <= self.carriages and int(nums[1]) <= self.seats_in_carriage:
-                info = {'id': person.passenger_id, 'seat': nums[1]}
+                info = {'id': person.id, 'seat': nums[1]}
                 dict[nums[0]].append(info)
         return dict
 
@@ -132,7 +131,7 @@ class Passenger:
 
         :return:
         """
-        return {'id': self.passenger_id, 'seat': self.seat}
+        return {'id': self.id, 'seat': self.seat}
 
 
 if __name__ == '__main__':
