@@ -65,7 +65,6 @@ class Train:
                 counter += 1
         return counter
 
-
     def get_passengers_in_carriages(self) -> dict:
         """
         Check passengers be carriage.
@@ -138,12 +137,3 @@ class Passenger:
         :return:
         """
         return {'id': self.id, 'seat': self.seat}
-
-
-if __name__ == '__main__':
-    p_1 = Passenger('123', '1-9')
-    p_2 = Passenger('321', '2-11')
-    p_3 = Passenger('456', '4-5')
-    t = Train([p_1, p_2, p_3], 3, 10)
-    print(t.get_number_of_passengers())
-
