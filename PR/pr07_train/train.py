@@ -51,7 +51,7 @@ class Train:
         """
         return self.carriages * self.seats_in_carriage
 
-    def get_number_of_passengers(self, passengers) -> int:
+    def get_number_of_passengers(self) -> int:
         """
         Count number of passengers.
 
@@ -59,7 +59,7 @@ class Train:
         :return:
         """
         a = 0
-        for i in range(len(passengers)):
+        for i in range(len(self._passengers)):
             a += 1
         return a
 
@@ -70,15 +70,19 @@ class Train:
         :return:
         """
         dict = {}
+        real_passengers = []
         if self.carriages == 0:
             return dict
-        for i in range(self._carriages):
+        for i in range(self.carriages):
             dict[f"{i + 1}"] = []
-        for person in self.passengers:
+        print(self._passengers)
+        for person in self._passengers:
             nums = person.seat.split("-")
             if int(nums[0]) <= self.carriages and int(nums[1]) <= self.seats_in_carriage:
                 info = {'id': person.id, 'seat': nums[1]}
                 dict[nums[0]].append(info)
+                real_passengers.append(person)
+        self._passengers = real_passengers
         return dict
 
     @passengers.setter
@@ -137,8 +141,9 @@ class Passenger:
 if __name__ == '__main__':
     p_1 = Passenger('123', '1-9')
     p_2 = Passenger('321', '2-11')
-    p_3 = Passenger('456', '4-5')
+    p_3 = Passenger('456', '3-5')
     t = Train([p_1, p_2, p_3], 3, 10)
-    print(t)
+    print(p_1.all)
     print(p_1.__dict__())
     print(t.get_passengers_in_carriages())
+    print(t.get_number_of_passengers())
