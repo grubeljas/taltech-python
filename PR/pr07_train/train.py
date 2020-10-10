@@ -58,8 +58,13 @@ class Train:
         :param passengers:
         :return:
         """
-        a = self._passengers
-        return len(a)
+        a = self.get_passengers_in_carriages()
+        counter = 0
+        for i in a.values():
+            for person in i:
+                counter += 1
+        return counter
+
 
     def get_passengers_in_carriages(self) -> dict:
         """
@@ -138,8 +143,7 @@ class Passenger:
 if __name__ == '__main__':
     p_1 = Passenger('123', '1-9')
     p_2 = Passenger('321', '2-11')
-    p_3 = Passenger('456', '3-5')
+    p_3 = Passenger('456', '4-5')
     t = Train([p_1, p_2, p_3], 3, 10)
     print(t.get_number_of_passengers())
-    print(t.get_passengers_in_carriages())
-    print(t.get_number_of_passengers())
+
