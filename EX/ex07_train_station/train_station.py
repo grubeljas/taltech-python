@@ -12,25 +12,48 @@ class Passenger:
         :param seat:
         """
         self.passenger_id = passenger_id
-        self.seat = seat.split("-")
-
-    def __str__(self):
-        return self
+        self.seat = seat
+        listing = seat.split("-")
+        self.trainid = listing[0]
+        self.carriage = listing[1]
+        self.place = listing[2]
 
     @property
     def passenger_id(self) -> str:
+        """
+        Get id.
+
+        :return:
+        """
         return self._passenger_id
 
     @property
     def seat(self) -> str:
+        """
+        Get seat.
+
+        :return:
+        """
         return self._seat
 
     @seat.setter
     def seat(self, value):
+        """
+        Set seat.
+
+        :param value:
+        :return:
+        """
         self._seat = value
 
     @passenger_id.setter
     def passenger_id(self, value):
+        """
+        Set id.
+
+        :param value:
+        :return:
+        """
         self._passenger_id = value
 
 
@@ -95,18 +118,28 @@ class Train:
         return self.carriages * self.seats_in_carriage
 
     def get_number_of_passengers(self) -> int:
+        """
+        Get number of passengers.
+
+        :return:
+        """
         self.get_passengers_in_carriages()
         return len(self._passengers)
 
     def get_passengers_in_carriages(self) -> dict:
+        """
+        Rerurn dictionary of passengers.
+
+        :return:
+        """
         dict = {}
         real_passengers = []
         for i in range(self.carriages):
             dict[f"{i + 1}"] = []
         for person in self.passengers:
-            if self._train_id == person.seat[0]:
-                if int(person.seat[1]) in range(1, self.carriages + 1) and int(person.seat[2]) in range(1, self.seats_in_carriage + 1):
-                    dict[person.seat[1]].append(person)
+            if self._train_id == person.trainid:
+                if int(person.carriage) in range(1, self.carriages + 1) and int(person.place) in range(1, self.seats_in_carriage + 1):
+                    dict[person.carriage].append(person)
                     real_passengers.append(person)
         self._passengers = real_passengers
         return dict
@@ -153,7 +186,7 @@ class Train:
 
     def add_passenger(self, passenger: Passenger) -> Passenger:
         """
-        Add passenger to the list
+        Add passenger to the list.
 
         :param passenger:
         :return:
@@ -178,15 +211,15 @@ class TrainStation:
 
     def get_station_overview(self) -> list:
         """
-        Get rekt.
+        Get dict of all trains and their amount of passengers.
 
         :return:
         """
         train_info = []
         for train in self._trains:
             for passenger in self.old_passengers[:]:
-                if passenger.seat[0] == train.train_id:
-                    if int(passenger.seat[1]) in range(1, train.carriages + 1) and int(passenger.seat[2]) in range(1, train.seats_in_carriage + 1):
+                if passenger.trainid == train.train_id:
+                    if int(passenger.carriage) in range(1, train.carriages + 1) and int(passenger.place) in range(1, train.seats_in_carriage + 1):
                         try:
                             for p in train.passengers:
                                 if passenger.seat == p.seat and passenger.passenger_id != p.passenger_id:
@@ -202,22 +235,49 @@ class TrainStation:
         return train_info
 
     def get_number_of_passengers(self):
+        """
+        Get number of passengers on the station.
+
+        :return:
+        """
         return len(self.old_passengers)
 
     @property
     def passengers(self):
+        """
+        Get passengers.
+
+        :return:
+        """
         return self._passengers
 
     @passengers.setter
     def passengers(self, value_list: list):
+        """
+        Set passengers.
+
+        :param value_list:
+        :return:
+        """
         self._passengers = value_list
 
     @property
     def trains(self):
+        """
+        Get trains.
+
+        :return:
+        """
         return self._trains
 
     @trains.setter
     def trains(self, value_list: list):
+        """
+        Set trains.
+
+        :param value_list:
+        :return:
+        """
         self._trains = value_list
 
 
