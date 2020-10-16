@@ -240,7 +240,7 @@ class TrainStation:
 
         :return:
         """
-        return len(self.old_passengers)
+        return len(self._passengers) - len(self.old_passengers)
 
     @property
     def passengers(self):
@@ -323,3 +323,4 @@ if __name__ == "__main__":
     get_station_overview_correct = [{'train_id': 'AA', 'carriages': 5, 'seats': '3/25'}, {'train_id': 'AB', 'carriages': 2, 'seats': '1/8'}]
     basic_test("get_station_overview", s1.get_station_overview(), get_station_overview_correct)
     basic_test("get_number_of_passengers", s1.get_number_of_passengers(), 4)
+    p = s1.get_number_of_passengers()
