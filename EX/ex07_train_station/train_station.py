@@ -128,21 +128,21 @@ class Train:
 
     def get_passengers_in_carriages(self) -> dict:
         """
-        Rerurn dictionary of passengers.
+        Return dictionary of passengers.
 
         :return:
         """
-        dict = {}
+        check = {}
         real_passengers = []
         for i in range(self.carriages):
-            dict[f"{i + 1}"] = []
+            check[f"{i + 1}"] = []
         for person in self.passengers:
             if self._train_id == person.trainid:
                 if int(person.carriage) in range(1, self.carriages + 1) and int(person.place) in range(1, self.seats_in_carriage + 1):
-                    dict[person.carriage].append(person)
+                    check[person.carriage].append(person)
                     real_passengers.append(person)
         self._passengers = real_passengers
-        return dict
+        return check
 
     @passengers.setter
     def passengers(self, value_list: list):
@@ -184,14 +184,26 @@ class Train:
         """
         self._seats_in_carriage = value
 
-    def add_passenger(self, passenger: Passenger) -> Passenger:
+    def add_passenger(self, passenger: Passenger):
         """
         Add passenger to the list.
 
         :param passenger:
         :return:
         """
-        self.passengers.append(passenger)
+        for p in self._passengers:
+            if passenger.seat == p.seat:
+                return None
+        if self._train_id == passenger.trainid:
+            if int(passenger.carriage) in range(1, self.carriages + 1):
+                if int(passenger.place) in range(1, self.seats_in_carriage + 1):
+                    self.passengers.append(passenger)
+                else:
+                    return None
+            else:
+                return None
+        else:
+            return None
 
 
 class TrainStation:
