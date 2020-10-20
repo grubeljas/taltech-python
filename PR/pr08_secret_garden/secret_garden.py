@@ -37,7 +37,6 @@ class Decoder:
         :param data: Base64 format string
         :return: Utf-8 format string
         """
-
         a = base64.b64decode(data)
         return a.decode("utf-8")
 
