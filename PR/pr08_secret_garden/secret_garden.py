@@ -37,7 +37,9 @@ class Decoder:
         :param data: Base64 format string
         :return: Utf-8 format string
         """
-        return str(base64.b64decode(data))[2:-1]
+
+        a = base64.b64decode(data)
+        return a.decode("utf-8")
 
     def calculate_cipher_step(self) -> int:
         """
@@ -76,7 +78,6 @@ class Decoder:
             for char in utf8:
                 char = chr((ord(char) - step) % 255)
                 word += char
-            word = word.replace("`|4:", "\n")
             decode.append(word)
         return decode
 
@@ -118,7 +119,6 @@ class SecretGarden:
         routes = self.decode_messages()
         locations = []
         for route in routes:
-            print(route)
             route = route.split("\n\n")
             point = route[0].split(";")
             point = list(map(int, point))
