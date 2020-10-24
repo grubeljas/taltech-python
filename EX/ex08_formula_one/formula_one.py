@@ -91,7 +91,7 @@ class Race:
                     else:
                         lines.append(line)
         except FileNotFoundError:
-            return "No file found!"
+            raise FileNotFoundError("No file found!")
         return lines
 
     @staticmethod
@@ -137,7 +137,7 @@ class Race:
     @staticmethod
     def format_time(time: str) -> str:
         """
-        Format time from milliseconds to M:SS.SSS
+        Format time from milliseconds to M:SS.SSS.
 
         format_time('12') -> 0:00.012
         format_time('1234') -> 0:01.234
@@ -272,7 +272,7 @@ class FormulaOne:
             writer = csv.writer(csvfile, delimiter=',')
             writer.writerow(['Place', 'Name', 'Team', 'Time', 'Diff', 'Points', 'Race'])
             for line in data:
-                writer.writerow([line['Place'], line['Name'], line['Team'], line['Time'], line['Diff'], line['Points'], line['Race']])
+                writer.writerow([line['Place'], line['Name'], line['Team'], line['Time'], line['Diff'], line['Points'], int(line['Race'])])
 
     def write_championship_to_file(self):
         """
@@ -284,7 +284,7 @@ class FormulaOne:
         """
         list_of_racers = []
         for i in range(self.number):
-            data = self.race.get_results_by_race(i+1)
+            data = self.race.get_results_by_race(i + 1)
             for racer in data:
                 dude = Driver(racer['Name'], racer['Team'])
                 if dude not in list_of_racers:
