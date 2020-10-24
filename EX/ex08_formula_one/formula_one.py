@@ -112,6 +112,7 @@ class Race:
         """
         pattern = r"\s\s+"
         a = re.split(pattern, line)
+        print(a[2])
         return {
             'Name': a[0],
             'Team': a[1],
@@ -207,10 +208,11 @@ class Race:
             else:
                 race["Points"] = "0"
             race["Place"] = str(place)
+            if place == 1:
+                first_time = int(race["Time"])
             if place > 1:
                 second_time = int(race["Time"])
                 race["Diff"] = Race.calculate_time_difference(first_time, second_time)
-            first_time = int(race["Time"])
             place += 1
             race["Time"] = Race.format_time(race["Time"])
         return data
@@ -287,12 +289,18 @@ class FormulaOne:
             data = self.race.get_results_by_race(i + 1)
             for racer in data:
                 dude = Driver(racer['Name'], racer['Team'])
-                if dude not in list_of_racers:
+                check = False
+                for bro in list_of_racers:
+                    if dude.team == bro.team and bro.name == dude.name:
+                        bro.add_result(i, racer['Points'])
+                        bro.set_points(racer['Points'])
+                        check = True
+                if check != True:
                     list_of_racers.append(dude)
-                dude.add_result(i, racer['Points'])
-                dude.set_points(racer['Points'])
+                    dude.add_result(i, racer['Points'])
+                    dude.set_points(racer['Points'])
         list_of_racers.sort(key=lambda x: x.points, reverse=True)
-        with open(f'championship_results.txt', 'w', newline='') as file:
+        with open('championship_results.txt', 'w', newline='') as file:
             file.write('PLACE     NAME                     TEAM                     POINTS\n')
             file.write('-' * 66 + '\n')
             counter = 1
@@ -315,5 +323,7 @@ if __name__ == '__main__':
     f1 = FormulaOne("ex08_example_data.txt")
     r = Race("ex08_example_data.txt")
     f1.write_race_results_to_file(1)
+    f1.write_race_results_to_csv(1)
     f1.write_race_results_to_csv(2)
+    f1.write_race_results_to_csv(3)
     print(f1.write_championship_to_file())
