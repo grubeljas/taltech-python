@@ -21,6 +21,7 @@ class Driver:
         self.name = name
         self.team = team
         self._results = {}
+        self.set_points()
         self._points = 0
 
     def get_results(self) -> dict:
@@ -41,8 +42,10 @@ class Driver:
 
     def set_points(self):
         """Set points for driver."""
+        a = 0
         for value in self._results.values():
-            self._points += int(value)
+            a += int(value)
+        self._points = a
 
     def add_result(self, race_number: int, points: int):
         """
@@ -54,6 +57,7 @@ class Driver:
         :param points: Number of points from the race
         """
         self._results[race_number] = points
+        self.set_points()
 
 
 class Race:
@@ -116,7 +120,7 @@ class Race:
         return {
             'Name': a[0],
             'Team': a[1],
-            'Time': a[2],
+            'Time': int(a[2]),
             'Diff': "",
             'Race': int(a[3]),
         }
@@ -204,10 +208,10 @@ class Race:
         points = [25, 18, 15, 12, 10, 8, 6, 4, 2, 1]
         for race in data:
             if place <= 10:
-                race["Points"] = str(points[place - 1])
+                race["Points"] = int(points[place - 1])
             else:
                 race["Points"] = "0"
-            race["Place"] = str(place)
+            race["Place"] = int(place)
             if place == 1:
                 first_time = int(race["Time"])
             if place > 1:
@@ -246,8 +250,7 @@ class FormulaOne:
             file.write('PLACE     NAME                     TEAM                     TIME           DIFF           POINTS\n')
             file.write('-' * 96 + '\n')
             for line in self.race.get_results_by_race(race_number):
-                while len(line['Place']) < 10:
-                    line['Place'] += ' '
+                gap = (10 - len(str(line['Place']))) * ' '
                 while len(line['Name']) < 25:
                     line['Name'] += ' '
                 while len(line['Team']) < 25:
@@ -256,9 +259,8 @@ class FormulaOne:
                     line['Time'] += ' '
                 while len(line['Diff']) < 15:
                     line['Diff'] += ' '
-                while len(line['Points']) < 6:
-                    line['Points'] += ' '
-                file.write(f"{line['Place']}{line['Name']}{line['Team']}{line['Time']}{line['Diff']}{line['Points']}\n")
+                gap2 = (6 - len(str(line['Place']))) * ' '
+                file.write(f"{line['Place']}{gap}{line['Name']}{line['Team']}{line['Time']}{line['Diff']}{line['Points']}{gap2}\n")
 
     def write_race_results_to_csv(self, race_number: int):
         """
@@ -275,7 +277,6 @@ class FormulaOne:
             writer.writerow(['Place', 'Name', 'Team', 'Time', 'Diff', 'Points', 'Race'])
             for line in data:
                 writer.writerow([line['Place'], line['Name'], line['Team'], line['Time'], line['Diff'], line['Points'], int(line['Race'])])
-
 
     def write_championship_to_file(self):
         """
@@ -332,7 +333,7 @@ class FormulaOne:
 if __name__ == '__main__':
     f1 = FormulaOne("ex08_example_data.txt")
     r = Race("ex08_example_data.txt")
-    print(r.get_results_by_race(1))
-    f1.write_championship_to_file()
-    f1.write_race_results_to_csv(1)
+    print(r.get_results_by_race(1)[2])
     f1.write_race_results_to_file(1)
+    f1.write_race_results_to_csv(2)
+    f1.write_championship_to_file()
