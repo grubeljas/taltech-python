@@ -116,9 +116,9 @@ class Race:
         return {
             'Name': a[0],
             'Team': a[1],
-            'Time': a[2],
+            'Time': int(a[2]),
             'Diff': "",
-            'Race': int(a[3]),
+            'Race': a[3],
         }
 
     def filter_data_by_race(self, race_number: int) -> list:
@@ -147,8 +147,7 @@ class Race:
         :param time: Time in milliseconds
         :return: Time as M:SS.SSS string
         """
-        milliseconds = time
-        milliseconds = int(milliseconds)
+        milliseconds = int(time)
         minutes = milliseconds // 60000
         milliseconds = milliseconds % 60000
         milliseconds = str(milliseconds)
@@ -284,19 +283,7 @@ class FormulaOne:
         using methods from Driver class.
         Exact specifications are described in the text.
         """
-        list_of_racers = []
-        for i in range(self.number):
-            data = self.race.get_results_by_race(i + 1)
-            for racer in data:
-                dude = Driver(racer['Name'], racer['Team'])
-                a = False
-                for bro in list_of_racers:
-                    if dude.team == bro.team and bro.name == dude.name:
-                        bro.add_result(i, racer['Points'])
-                        a = True
-                if not a:
-                    list_of_racers.append(dude)
-                    dude.add_result(i, racer['Points'])
+        list_of_racers = self.count_points()
         for chel in list_of_racers:
             chel.set_points()
         list_of_racers.sort(key=lambda x: x._points, reverse=True)
@@ -317,3 +304,35 @@ class FormulaOne:
                     dude.points += ' '
                 file.write(f"{place}{dude.name}{dude.team}{dude.points}\n")
                 counter += 1
+
+    def count_points(self):
+        """
+        Count points of every driver.
+
+        :return:
+        """
+        list_of_racers = []
+        for i in range(self.number):
+            data = self.race.get_results_by_race(i + 1)
+            for racer in data:
+                dude = Driver(racer['Name'], racer['Team'])
+                a = False
+                for bro in list_of_racers:
+                    if dude.team == bro.team and bro.name == dude.name:
+                        bro.add_result(i, racer['Points'])
+                        a = True
+                if not a:
+                    list_of_racers.append(dude)
+                    dude.add_result(i, racer['Points'])
+        return list_of_racers
+
+
+
+if __name__ == '__main__':
+    f1 = FormulaOne("example.txt")
+    r = Race("ex08_example_data.txt")
+    f1.write_race_results_to_file(1)
+    f1.write_race_results_to_csv(1)
+    f1.write_race_results_to_csv(2)
+    f1.write_race_results_to_csv(3)
+    print(r.info)
