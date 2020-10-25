@@ -116,9 +116,9 @@ class Race:
         return {
             'Name': a[0],
             'Team': a[1],
-            'Time': int(a[2]),
+            'Time': a[2],
             'Diff': "",
-            'Race': a[3],
+            'Race': int(a[3]),
         }
 
     def filter_data_by_race(self, race_number: int) -> list:
@@ -147,7 +147,8 @@ class Race:
         :param time: Time in milliseconds
         :return: Time as M:SS.SSS string
         """
-        milliseconds = int(time)
+        milliseconds = time
+        milliseconds = int(milliseconds)
         minutes = milliseconds // 60000
         milliseconds = milliseconds % 60000
         milliseconds = str(milliseconds)
@@ -275,6 +276,7 @@ class FormulaOne:
             for line in data:
                 writer.writerow([line['Place'], line['Name'], line['Team'], line['Time'], line['Diff'], line['Points'], int(line['Race'])])
 
+
     def write_championship_to_file(self):
         """
         Write championship results to file.
@@ -319,20 +321,18 @@ class FormulaOne:
                 a = False
                 for bro in list_of_racers:
                     if dude.team == bro.team and bro.name == dude.name:
-                        bro.add_result(i, racer['Points'])
+                        bro.add_result(i + 1, racer['Points'])
                         a = True
                 if not a:
                     list_of_racers.append(dude)
-                    dude.add_result(i, racer['Points'])
+                    dude.add_result(i + 1, racer['Points'])
         return list_of_racers
 
 
-
 if __name__ == '__main__':
-    f1 = FormulaOne("example.txt")
+    f1 = FormulaOne("ex08_example_data.txt")
     r = Race("ex08_example_data.txt")
-    f1.write_race_results_to_file(1)
+    print(r.get_results_by_race(1))
+    f1.write_championship_to_file()
     f1.write_race_results_to_csv(1)
-    f1.write_race_results_to_csv(2)
-    f1.write_race_results_to_csv(3)
-    print(r.info)
+    f1.write_race_results_to_file(1)
