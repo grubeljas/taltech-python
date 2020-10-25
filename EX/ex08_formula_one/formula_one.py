@@ -20,8 +20,8 @@ class Driver:
         """
         self.name = name
         self.team = team
-        self.results = {}
-        self.points = 0
+        self._results = {}
+        self._points = 0
 
     def get_results(self) -> dict:
         """
@@ -29,7 +29,7 @@ class Driver:
 
         :return: Results as dictionary
         """
-        return self.results
+        return self._results
 
     def get_points(self) -> int:
         """
@@ -37,11 +37,12 @@ class Driver:
 
         :return: Calculated points
         """
-        return self.points
+        return self._points
 
-    def set_points(self, value):
+    def set_points(self):
         """Set points for driver."""
-        self.points += int(value)
+        for value in self._results.values():
+            self._points += int(value)
 
     def add_result(self, race_number: int, points: int):
         """
@@ -52,7 +53,7 @@ class Driver:
         :param race_number: Race number
         :param points: Number of points from the race
         """
-        self.results[race_number] = points
+        self._results[race_number] = points
 
 
 class Race:
@@ -112,13 +113,12 @@ class Race:
         """
         pattern = r"\s\s+"
         a = re.split(pattern, line)
-        print(a[2])
         return {
             'Name': a[0],
             'Team': a[1],
             'Time': a[2],
             'Diff': "",
-            'Race': a[3],
+            'Race': int(a[3]),
         }
 
     def filter_data_by_race(self, race_number: int) -> list:
@@ -289,24 +289,24 @@ class FormulaOne:
             data = self.race.get_results_by_race(i + 1)
             for racer in data:
                 dude = Driver(racer['Name'], racer['Team'])
-                check = False
+                a = False
                 for bro in list_of_racers:
                     if dude.team == bro.team and bro.name == dude.name:
                         bro.add_result(i, racer['Points'])
-                        bro.set_points(racer['Points'])
-                        check = True
-                if check != True:
+                        a = True
+                if not a:
                     list_of_racers.append(dude)
                     dude.add_result(i, racer['Points'])
-                    dude.set_points(racer['Points'])
-        list_of_racers.sort(key=lambda x: x.points, reverse=True)
+        for chel in list_of_racers:
+            chel.set_points()
+        list_of_racers.sort(key=lambda x: x._points, reverse=True)
         with open('championship_results.txt', 'w', newline='') as file:
             file.write('PLACE     NAME                     TEAM                     POINTS\n')
             file.write('-' * 66 + '\n')
             counter = 1
             for dude in list_of_racers:
                 place = str(counter)
-                dude.points = str(dude.points)
+                dude.points = str(dude._points)
                 while len(place) < 10:
                     place += ' '
                 while len(dude.name) < 25:
@@ -317,13 +317,3 @@ class FormulaOne:
                     dude.points += ' '
                 file.write(f"{place}{dude.name}{dude.team}{dude.points}\n")
                 counter += 1
-
-
-if __name__ == '__main__':
-    f1 = FormulaOne("ex08_example_data.txt")
-    r = Race("ex08_example_data.txt")
-    f1.write_race_results_to_file(1)
-    f1.write_race_results_to_csv(1)
-    f1.write_race_results_to_csv(2)
-    f1.write_race_results_to_csv(3)
-    print(f1.write_championship_to_file())
