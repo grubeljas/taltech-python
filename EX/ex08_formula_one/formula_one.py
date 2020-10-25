@@ -259,7 +259,7 @@ class FormulaOne:
                     line['Time'] += ' '
                 while len(line['Diff']) < 15:
                     line['Diff'] += ' '
-                gap2 = (6 - len(str(line['Place']))) * ' '
+                gap2 = (6 - len(str(line['Points']))) * ' '
                 file.write(f"{line['Place']}{gap}{line['Name']}{line['Team']}{line['Time']}{line['Diff']}{line['Points']}{gap2}\n")
 
     def write_race_results_to_csv(self, race_number: int):
@@ -328,12 +328,3 @@ class FormulaOne:
                     list_of_racers.append(dude)
                     dude.add_result(i + 1, racer['Points'])
         return list_of_racers
-
-
-if __name__ == '__main__':
-    f1 = FormulaOne("ex08_example_data.txt")
-    r = Race("ex08_example_data.txt")
-    print(r.get_results_by_race(3))
-    f1.write_race_results_to_file(3)
-    f1.write_race_results_to_csv(1)
-    f1.write_championship_to_file()
