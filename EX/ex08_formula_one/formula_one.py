@@ -210,7 +210,7 @@ class Race:
             if place <= 10:
                 race["Points"] = int(points[place - 1])
             else:
-                race["Points"] = "0"
+                race["Points"] = 0
             race["Place"] = int(place)
             if place == 1:
                 first_time = int(race["Time"])
@@ -333,7 +333,7 @@ class FormulaOne:
 if __name__ == '__main__':
     f1 = FormulaOne("ex08_example_data.txt")
     r = Race("ex08_example_data.txt")
-    print(r.get_results_by_race(1)[2])
-    f1.write_race_results_to_file(1)
-    f1.write_race_results_to_csv(2)
+    print(r.get_results_by_race(3))
+    f1.write_race_results_to_file(3)
+    f1.write_race_results_to_csv(1)
     f1.write_championship_to_file()
