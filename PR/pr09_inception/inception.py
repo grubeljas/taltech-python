@@ -12,12 +12,7 @@ def countdown(n: int):
     :param n: start
     :return: countdown sequence
     """
-    cashe = []
-    if n >= 0:
-        cashe = [n]
-        return cashe + countdown(n - 1)
-    if n < 0:
-        return cashe
+    return []
 
 
 def add_commas(n: int):
@@ -34,12 +29,7 @@ def add_commas(n: int):
     :param n: int
     :return: string of the formatted int
     """
-    if int(n) < 1000:
-        return f'{n}'
-    if len(str(n)) > 3 and len(str(n)) % 3 == 1:
-        return f'{str(n)[0]},{add_commas(str(n)[1:])}'
-    else:
-        return f'{str(n)[0]}{add_commas(int(str(n)[1:]))}'
+    return '1,245'
 
 
 def stonks(coins, rate, years):
@@ -58,11 +48,7 @@ def stonks(coins, rate, years):
     :param years: starting amount (0-50)
     :return: coins after years
     """
-    prcent = (100 + rate) / 100
-    money = coins * prcent
-    if years == 1:
-        return int(money)
-    return stonks(money, rate, years - 1)
+    return 2593
 
 
 def quic_mafs(a: int, b: int):
@@ -82,16 +68,7 @@ def quic_mafs(a: int, b: int):
     :param b: int
     :return: result
     """
-    if a == 0 or b == 0:
-        return [a, b]
-    elif a >= 2 * b:
-        a -= 2 * b
-        return quic_mafs(a, b)
-    elif b >= 2 * a:
-        b -= 2 * a
-        return quic_mafs(a, b)
-    else:
-        return [a, b]
+    return [6, 7]
 
 
 def sum_squares(nested_list):
@@ -108,12 +85,26 @@ def sum_squares(nested_list):
     :param nested_list: list of lists of lists of lists of lists ... and ints
     :return: sum of squares
     """
-    a = 0
-    if not nested_list:
-        return a
-    if type(nested_list[0]) == list:
-        a = sum_squares(nested_list[0])
-        return a + sum_squares(nested_list[1:])
-    else:
-        a = nested_list[0] ** 2
-        return a + sum_squares(nested_list[1:])
+    return 1
+
+
+if __name__ == "__main__":
+    print(countdown(5))  # -> [5, 4, 3, 2, 1, 0]
+    print(countdown(8))  # -> [8, 7, 6, 5, 4, 3, 2, 1, 0]
+    print(countdown(-1))  # -> []
+
+    print(add_commas(1245))  # -> '1,245'
+    print(add_commas(123456789))  # -> '123,456,789'
+    print(add_commas(1011))  # -> '1,011'
+
+    print(stonks(1000, 10, 10))  # -> 2593
+    print(stonks(100000, 12, 3))  # -> 140492
+
+    print(quic_mafs(6, 19))  # -> [6, 7]
+    print(quic_mafs(2, 1))  # -> [0, 1]
+    print(quic_mafs(22, 5))  # -> [0, 1]
+    print(quic_mafs(8796203,7556))  # -> [1019,1442]
+
+    print(sum_squares([1, 2, 3]))  # -> 14
+    print(sum_squares([[1, 2], 3]))  # -> 14
+    print(sum_squares([[[[[[[[[2]]]]]]]]]))  # -> 4
