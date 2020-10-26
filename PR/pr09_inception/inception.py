@@ -23,8 +23,8 @@ def countdown(n: int):
 def add_commas(n: int):
     """
     In representing large numbers, from the right side to the left.
-    English texts usually use commas to separate each group of three digits in front of the decimal.
 
+    English texts usually use commas to separate each group of three digits in front of the decimal.
     Your challenge is to output a number n formatted with commas.
 
     add_commas(1245) -> '1,245'
@@ -36,10 +36,12 @@ def add_commas(n: int):
     """
     if int(n) < 1000:
         return f'{n}'
+    if len(str(n)) > 3 and len(str(n)) % 3 == 0:
+        return f'{str(n)[:3]},{add_commas(str(n)[3:])}'
     if len(str(n)) > 3 and len(str(n)) % 3 == 1:
         return f'{str(n)[0]},{add_commas(str(n)[1:])}'
     else:
-        return f'{str(n)[0]}{add_commas(int(str(n)[1:]))}'
+        return f'{str(n)[0]}{add_commas(str(n)[1:])}'
 
 
 def stonks(coins, rate, years):
@@ -117,3 +119,5 @@ def sum_squares(nested_list):
     else:
         a = nested_list[0] ** 2
         return a + sum_squares(nested_list[1:])
+
+print(add_commas(2134062383))
