@@ -34,7 +34,7 @@ def add_commas(n: int):
     :param n: int
     :return: string of the formatted int
     """
-    if int(n) < 1000:
+    if len(str(n)) < 4:
         return f'{n}'
     if len(str(n)) > 3 and len(str(n)) % 3 == 0:
         return f'{str(n)[:3]},{add_commas(str(n)[3:])}'
