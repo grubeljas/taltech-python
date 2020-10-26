@@ -34,12 +34,7 @@ def add_commas(n: int):
     :param n: int
     :return: string of the formatted int
     """
-    if int(n) < 10:
-        return f'{n}'
-    if len(str(n)) > 3 and len(str(n)) % 3 == 1:
-        return f'{str(n)[0]},{add_commas(str(n)[1:])}'
-    else:
-        return f'{str(n)[0]}{add_commas(int(str(n)[1:]))}'
+    pass
 
 
 def stonks(coins, rate, years):
