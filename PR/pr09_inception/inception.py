@@ -12,7 +12,12 @@ def countdown(n: int):
     :param n: start
     :return: countdown sequence
     """
-    return []
+    cashe = []
+    if n >= 0:
+        cashe = [n]
+        return cashe + countdown(n - 1)
+    if n < 0:
+        return cashe
 
 
 def add_commas(n: int):
