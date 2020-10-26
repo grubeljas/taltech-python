@@ -34,7 +34,12 @@ def add_commas(n: int):
     :param n: int
     :return: string of the formatted int
     """
-    pass
+    if int(n) < 1000:
+        return f'{n}'
+    if len(str(n)) > 3 and len(str(n)) % 3 == 1:
+        return f'{str(n)[0]},{add_commas(str(n)[1:])}'
+    else:
+        return f'{str(n)[0]}{add_commas(int(str(n)[1:]))}'
 
 
 def stonks(coins, rate, years):
@@ -112,25 +117,3 @@ def sum_squares(nested_list):
     else:
         a = nested_list[0] ** 2
         return a + sum_squares(nested_list[1:])
-
-
-if __name__ == "__main__":
-    print(countdown(5))  # -> [5, 4, 3, 2, 1, 0]
-    print(countdown(8))  # -> [8, 7, 6, 5, 4, 3, 2, 1, 0]
-    print(countdown(-1))  # -> []
-
-    print(add_commas(1245))  # -> '1,245'
-    print(add_commas(123456789))  # -> '123,456,789'
-    print(add_commas(1011))  # -> '1,011'
-
-    print(stonks(1000, 10, 10))  # -> 2593
-    print(stonks(100000, 12, 3))  # -> 140492
-
-    print(quic_mafs(6, 19))  # -> [6, 7]
-    print(quic_mafs(2, 1))  # -> [0, 1]
-    print(quic_mafs(22, 5))  # -> [0, 1]
-    print(quic_mafs(8796203, 7556))  # -> [1019,1442]
-
-    print(sum_squares([1, 2, 3]))  # -> 14
-    print(sum_squares([[1, 2], 3]))  # -> 14
-    print(sum_squares([[[[[[[[[2]]]]]]]]]))  # -> 4
