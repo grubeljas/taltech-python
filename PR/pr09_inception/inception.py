@@ -53,7 +53,11 @@ def stonks(coins, rate, years):
     :param years: starting amount (0-50)
     :return: coins after years
     """
-    return 2593
+    prcent = (100 + rate) / 100
+    money = coins * prcent
+    if years == 1:
+        return int(money)
+    return stonks(money, rate, years - 1)
 
 
 def quic_mafs(a: int, b: int):
