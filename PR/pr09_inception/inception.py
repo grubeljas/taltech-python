@@ -22,7 +22,7 @@ def countdown(n: int):
 
 def add_commas(n: int):
     """
-    In representing large numbers, from the right side to the left,
+    In representing large numbers, from the right side to the left.
     English texts usually use commas to separate each group of three digits in front of the decimal.
 
     Your challenge is to output a number n formatted with commas.
