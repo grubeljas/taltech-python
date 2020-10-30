@@ -133,15 +133,3 @@ class SecretGarden:
             point = tuple(point)
             locations.append(point)
         return locations
-
-
-if __name__ == '__main__':
-    d = Decoder('pr08_example_data.txt', 'Fat Chocobo')
-    print(d.read_code_from_file())  # ['KS0uNyktBgZBT08=', ...]
-    print(d.decode_from_base64('MDsyCgpOTlNXV0U='))  # 0;2\n\nNNSWWE
-    print(d.calculate_cipher_step())  # 70 + 97 + 116 + 32 + ... -> 1016
-    print(d.decode())  # ['-12;-1\n\nESS', ...]
-
-    sg = SecretGarden('pr08_example_data.txt', 'Fat Chocobo')
-    print(sg.decode_messages())  # ['-12;-1\n\nESS', ...]
-    print(sg.find_secret_locations())  # [(-11, -3), (20, -13), (1, -3), (-2, -5), (10, 4), (6, -13), (2, -6)]
