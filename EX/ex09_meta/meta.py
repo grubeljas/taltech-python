@@ -17,16 +17,15 @@ def tree(length):
     :param length: height of the trunk or leaf
     """
     if not length < 5:
+        lil_lenght = length * 3 / 5
         t.forward(length)
         t.left(60)
-        tree(length * 0.6)
+        tree(lil_lenght)
         t.right(120)
-        tree(length * 0.6)
-        t.left(60)
-        t.backward
+        tree(lil_lenght)
+        t.right(120)
         t.forward(length)
-        t.backward
-        t.right(120)
+        t.right(180)
 
 
 def apply_dragon_rules(string):
@@ -43,7 +42,14 @@ def apply_dragon_rules(string):
     :param string: sentence with "a" and "b" characters that need to be replaced
     :return: new sentence with "a" and "b" characters replaced
     """
-    pass
+    if string == '':
+        return ''
+    if string[0] == "a":
+        return "aRbFR" + apply_dragon_rules(string[1:])
+    elif string[0] == 'b':
+        return "LFaLb" + apply_dragon_rules(string[1:])
+    else:
+        return string[0] + apply_dragon_rules(string[1:])
 
 
 def curve(string, depth):
@@ -57,7 +63,10 @@ def curve(string, depth):
     :param depth: how many times the rules are applied
     :return: instructionset at iteration 'depth'
     """
-    pass
+    if depth == 0:
+        return string
+    string = apply_dragon_rules(string)
+    return curve(string, depth - 1)
 
 
 def format_curve(string):
@@ -70,7 +79,12 @@ def format_curve(string):
     :param string: instruction string
     :return: clean instructions with only "F", "R", and "L" characters
     """
-    pass
+    if string == "":
+        return ''
+    if string[0] == 'a' or string[0] == 'b':
+        return format_curve(string[1:])
+    else:
+        return string[0] + format_curve(string[1:])
 
 
 def draw_dragon(string, length):
@@ -84,7 +98,21 @@ def draw_dragon(string, length):
     :param string: instructions left to process
     :param length: how many pixels to move forward, left or right
     """
-    pass
+    if string == '':
+        return ''
+    if string[0] == "L":
+        t.left(90)
+        t.forward(length)
+        draw_dragon(string[1:], length)
+    elif string[0] == 'R':
+        t.right(90)
+        t.forward(length)
+        draw_dragon(string[1:], length)
+    elif string[0] == 'F':
+        t.forward(length)
+        draw_dragon(string[1:], length)
+    else:
+        raise ValueError
 
 
 def get_line_length(dragon_width, depth):
@@ -105,13 +133,9 @@ if __name__ == '__main__':
     t.speed(0)
     t.pensize(2)
     t.left(90)
-    tree(200)
-
-    '''
     s = curve("Fa", 8)
     s = format_curve(s)
     l = get_line_length(100, 8)
     draw_dragon(s, l)
-    '''
     save(t)
     t.getscreen().exitonclick()
