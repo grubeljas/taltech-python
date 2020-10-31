@@ -88,7 +88,8 @@ def format_curve(string):
 
 
 def draw_dragon(string, length):
-    """Draws the dragon by reading the string recursively.
+    """
+    Draw the dragon by reading the string recursively.
 
     Use t.right(), t.left(), t.forward() and draw_dragon() to move turtle.
         L - means turn 90 degrees to left and go forward
@@ -135,7 +136,7 @@ if __name__ == '__main__':
     t.left(90)
     s = curve("Fa", 8)
     s = format_curve(s)
-    l = get_line_length(100, 8)
-    draw_dragon(s, l)
+    length = get_line_length(100, 8)
+    draw_dragon(s, length)
     save(t)
     t.getscreen().exitonclick()
