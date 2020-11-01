@@ -6,7 +6,7 @@ def function_a(n: int) -> int:
 
 
 def function_b(n: int) -> int:
-    return n + 320
+    return n * 2 + 3
 
 
 def function_c(n: int) -> int:
