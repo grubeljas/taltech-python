@@ -42,10 +42,12 @@ def nr_into_num_list(nr: int, num_list: list) -> list:
     if len(num_list) == 1:
         return num_list
     i = -1
-    while num_list[i] != num_list[0]:
-        if num_list[i] < num_list[i - 1]:
-            num_list[i], num_list[i - 1] = num_list[i - 1], num_list[i]
-            i -= 1
-        else:
+    while True:
+        try:
+            if num_list[i] < num_list[i - 1]:
+                num_list[i], num_list[i - 1] = num_list[i - 1], num_list[i]
+                i -= 1
+            else:
+                return num_list
+        except IndexError:
             return num_list
-    return num_list

@@ -11,7 +11,7 @@ class Restaurant:
 
     def add_dish(self, dish: 'Dish') -> bool:
         """Add a dish if not already in restaurant."""
-        return self.menu.add_dish(dish)
+        return self.menus[0].add_dish(dish)
 
     def get_dishes(self) -> list:
         """Return all the dishes in the restaurant."""
@@ -50,7 +50,7 @@ class Restaurant:
     def get_menus_ordered_by_price(self) -> list:
         """A new list of menus ordered by total price (highest first), then by dish count (lower first)."""
         menus = sorted(self.menus, key=lambda x: len(x.food))
-        menus = sorted(menus, key= lambda x: x.count_price(), reverse=True)
+        menus = sorted(menus, key=lambda x: x.count_price(), reverse=True)
         return menus
 
 

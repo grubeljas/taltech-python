@@ -3,6 +3,7 @@
 
 class Car:
     """Car object."""
+
     def __init__(self, model, year, price):
         """Car constructor."""
         self.year = year
@@ -11,9 +12,7 @@ class Car:
 
 
 def create_car(model: str, price: int) -> 'Car':
-    """
-    Create a new car object with the current year if price is above 0.
-    """
+    """Create a new car object with the current year if price is above 0."""
     if price > 0:
         return Car(model, 2020, price)
 
@@ -33,7 +32,7 @@ def get_most_expensive_car_below_price(cars: list, max_price: int) -> 'Car':
     if holder == 0:
         return None
     else:
-        return car
+        return exp_car
 
 
 def update_prices(cars: list, discount_per_year: int) -> None:
@@ -76,3 +75,4 @@ def get_ordered_cars(cars: list) -> list:
     cars = sorted(cars, key=lambda x: x.model)
     cars = sorted(cars, key=lambda x: x.price)
     cars = sorted(cars, key=lambda x: x.year)
+    return cars
