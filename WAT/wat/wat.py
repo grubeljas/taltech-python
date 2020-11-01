@@ -2,11 +2,11 @@
 
 
 def function_a(n: int) -> int:
-    return -1
+    return n / 117
 
 
 def function_b(n: int) -> int:
-    return -1
+    return n + 320
 
 
 def function_c(n: int) -> int:
@@ -50,7 +50,7 @@ def function_multiple(n: int) -> int:
 
 
 def function_mod(n: int) -> int:
-    return -1
+    return 0
 
 
 def function_composition(n: int) -> int:
