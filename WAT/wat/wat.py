@@ -2,7 +2,7 @@
 
 
 def function_a(n: int) -> int:
-    return 0
+    return 4
 
 
 def function_b(n: int) -> int:
