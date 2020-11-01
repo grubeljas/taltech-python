@@ -2,7 +2,7 @@
 
 
 def function_a(n: int) -> int:
-    return n / 117
+    return 0
 
 
 def function_b(n: int) -> int:
@@ -10,7 +10,7 @@ def function_b(n: int) -> int:
 
 
 def function_c(n: int) -> int:
-    return -1
+    return 21812 * n - 6536585
 
 
 def function_d(n: int) -> int:
