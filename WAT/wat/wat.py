@@ -18,7 +18,7 @@ def function_d(n: int) -> int:
 
 
 def function_e(n: int) -> int:
-    return -1
+    return n // 8
 
 
 def function_f(n: int) -> int:
