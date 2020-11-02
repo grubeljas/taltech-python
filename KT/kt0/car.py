@@ -26,7 +26,7 @@ def get_most_expensive_car_below_price(cars: list, max_price: int) -> 'Car':
     """
     holder = 0
     for car in cars:
-        if car.price > max_price and car.price > holder:
+        if max_price > car.price > holder:
             holder = car.price
             exp_car = car
     if holder == 0:
@@ -72,7 +72,4 @@ def get_cars_with_model(cars: list, model: str) -> list:
 
 def get_ordered_cars(cars: list) -> list:
     """Return a new sorted list of cars by: year (newer first), price (cheaper first), model (from a to z)."""
-    cars = sorted(cars, key=lambda x: x.model)
-    cars = sorted(cars, key=lambda x: x.price)
-    cars = sorted(cars, key=lambda x: x.year)
-    return cars
+    return sorted(cars, key=lambda x: (-x.year, x.price, x.model))

@@ -109,5 +109,10 @@ class Menu:
         """
         if set(self.food) == set(menu.food):
             return True
-        else:
-            return False
+        count = 0
+        for dish in set(self.food):
+            for dich in set(menu.food):
+                if dish.price == dich.price and dish._name == dich._name:
+                    count += 1
+        if count == len(self.food):
+            return count
