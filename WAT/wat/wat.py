@@ -10,7 +10,7 @@ def function_b(n: int) -> int:
 
 
 def function_c(n: int) -> int:
-    return 21812 * n - 6536585
+    return 14 * n * n + 28 * n + 15
 
 
 def function_d(n: int) -> int:
