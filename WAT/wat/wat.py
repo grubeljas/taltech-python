@@ -1,6 +1,7 @@
 """Wat."""
 
 
+
 def function_a(n: int) -> int:
     return 4
 
@@ -14,7 +15,7 @@ def function_c(n: int) -> int:
 
 
 def function_d(n: int) -> int:
-    return -1
+    return 23384 * n * n - 14930141 * n + 3140224146
 
 
 def function_e(n: int) -> int:
