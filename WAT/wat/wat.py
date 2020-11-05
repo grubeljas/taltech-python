@@ -15,7 +15,7 @@ def function_c(n: int) -> int:
 
 
 def function_d(n: int) -> int:
-    return 23384 * n * n - 14930141 * n + 3140224146
+    return 12 * n ** 3 + 20 * n * n + 19 * n + 18
 
 
 def function_e(n: int) -> int:
