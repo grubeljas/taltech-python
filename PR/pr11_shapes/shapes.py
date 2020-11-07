@@ -34,7 +34,7 @@ class Circle(Shape):
         The radius value is stored here.
         """
         self.radius = radius
-        self.color = color
+        self._color = color
 
     def __repr__(self) -> str:
         """
@@ -43,7 +43,7 @@ class Circle(Shape):
         For this exercise, this should return a string:
         Circle (r: {radius}, color: {color})
         """
-        return f'Circle (r: {self.radius}, color: {self.color})'
+        return f'Circle (r: {self.radius}, color: {self._color})'
 
     def get_area(self) -> float:
         """
@@ -66,7 +66,7 @@ class Square(Shape):
 
         The side value is stored here.
         """
-        self.color = color
+        self._color = color
         self.side = side
 
     def __repr__(self) -> str:
@@ -76,7 +76,7 @@ class Square(Shape):
         For this exercise, this should return a string:
         Square (a: {side}, color: {color})
         """
-        return f'Square (a: {self.side}, color: {self.color})'
+        return f'Square (a: {self.side}, color: {self._color})'
 
     def get_area(self) -> float:
         """
@@ -101,7 +101,7 @@ class Rectangle(Shape):
         :param a:
         :param b:
         """
-        self.color = color
+        self._color = color
         self.a = a
         self.b = b
 
@@ -110,10 +110,10 @@ class Rectangle(Shape):
         Return representation of the rectangle.
 
         For this exercise, this should return a string:
-        Rectangle (a: {a}, b: {b}, color: {color})
+        Rectangle (l: {a}, w: {b}, color: {color})
         :return:
         """
-        return f'Rectangle (a: {self.a}, b: {self.b}, color: {self.color})'
+        return f'Rectangle (l: {self.a}, w: {self.b}, color: {self._color})'
 
     def get_area(self):
         """
@@ -137,15 +137,11 @@ class Paint:
         self.paints.append(shape)
 
     def get_shapes(self) -> list:
-        """
-        Return all the shapes.
-        """
+        """Return all the shapes."""
         return self.paints
 
     def calculate_total_area(self) -> float:
-        """
-        Calculate total area of the shapes.
-        """
+        """Calculate total area of the shapes."""
         total = 0
         for shape in self.get_shapes():
             total += shape.get_area()
@@ -155,7 +151,7 @@ class Paint:
         """Return only circles."""
         circles = []
         for shape in self.get_shapes():
-            if shape is Circle:
+            if type(shape) is Circle:
                 circles.append(shape)
         return circles
 
@@ -163,7 +159,7 @@ class Paint:
         """Return only squares."""
         squares = []
         for shape in self.get_shapes():
-            if shape is Square:
+            if type(shape) is Square:
                 squares.append(shape)
         return squares
 
@@ -171,7 +167,7 @@ class Paint:
         """Return only rectangles."""
         rectangles = []
         for shape in self.get_shapes():
-            if shape is Rectangle:
+            if type(shape) is Rectangle:
                 rectangles.append(shape)
         return rectangles
 
@@ -183,3 +179,4 @@ if __name__ == '__main__':
     paint.add_shape(circle)
     paint.add_shape(square)
     print(paint.calculate_total_area())
+    print(len(paint.get_circles()))
