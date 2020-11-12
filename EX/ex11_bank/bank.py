@@ -165,7 +165,7 @@ class Account:
         if amount <= 0:
             raise TransactionError('Need more money')
         elif is_from_atm:
-            transaction = Transaction(amount, datetime.date.today(), self.person, self.person, is_from_atm)
+            transaction = Transaction(amount, datetime.date.today(), self, self, is_from_atm)
             self.transactions.append(transaction)
             self.bank.transactions.append(transaction)
             self._balance += amount
@@ -175,15 +175,29 @@ class Account:
         if amount <= 0 or amount > self._balance:
             raise TransactionError('Wrong number')
         elif is_from_atm:
-            transaction = Transaction(-amount, datetime.date.today(), self.person, self.person, is_from_atm)
+            transaction = Transaction(-amount, datetime.date.today(), self, self, is_from_atm)
+            self.transactions.append(transaction)
+            self.bank.transactions.append(transaction)
+            self._balance -= amount
 
     def transfer(self, amount: float, receiver_account: 'Account'):
         """Transfer money from one account to another."""
-        pass
+        if amount <= 0 or amount > self._balance:
+            raise TransactionError('Wrong number')
+        else:
+            transaction = Transaction(amount, datetime.date.today(), self, receiver_account, False)
+            self.transactions.append(transaction)
+            self.bank.transactions.append(transaction)
+            self._balance -= amount
+            receiver_account._balance += amount
 
     def account_statement(self, from_date: datetime.date, to_date: datetime.date) -> list:
         """All transactions in given period."""
-        pass
+        trans = []
+        for transaction in self.transactions:
+            if from_date <= transaction.date <= to_date:
+                trans.append(transaction)
+        return trans
 
     def get_debit_turnover(self, from_date: datetime.date, to_date: datetime.date) -> float:
         """
@@ -193,7 +207,11 @@ class Account:
         :param to_date: to date object (included)
         :return: debit turnover number
         """
-        pass
+        turnover = 0
+        for trans in self.account_statement(from_date, to_date):
+            if trans.amount > 0:
+                turnover += trans.amount
+        return turnover
 
     def get_credit_turnover(self, from_date: datetime.date, to_date: datetime.date) -> float:
         """
@@ -203,7 +221,11 @@ class Account:
         :param to_date: to date object (included)
         :return: credit turnover number
         """
-        pass
+        turnover = 0
+        for trans in self.account_statement(from_date, to_date):
+            if trans.amount < 0:
+                turnover -= trans.amount
+        return turnover
 
     def get_net_turnover(self, from_date: datetime.date, to_date: datetime.date) -> float:
         """
@@ -213,7 +235,9 @@ class Account:
         :param to_date: to date object (included)
         :return: net turnover number
         """
-        pass
+        a = self.get_debit_turnover(from_date, to_date)
+        b = self.get_credit_turnover(from_date, to_date)
+        return a + b
 
     def __repr__(self) -> str:
         """
@@ -221,4 +245,10 @@ class Account:
 
         :return: account number
         """
-        pass
+        return self.number
+
+
+bank = Bank('STONKS')
+ac = Account(111.1, 'PAVEL', bank)
+ac = Account(111.1, 'A', bank)
+tr = Transaction(1.1, datetime.date.today(), ac, ac, True)
