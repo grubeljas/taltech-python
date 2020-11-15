@@ -46,7 +46,7 @@ class Person:
     @age.setter
     def age(self, value: int):
         """Set person's age. Must be greater than 0."""
-        if value <= 0:
+        if value > 0:
             self._age = value
         else:
             raise PersonError
@@ -194,24 +194,24 @@ class Account:
 
     def transfer(self, amount: float, receiver_account: 'Account'):
         """Transfer money from one account to another."""
-        if self == receiver_account or amount <= 0:
-            return TransactionError
+        if self == receiver_account:
+            raise TransactionError
         if self.bank == receiver_account.bank:
             if amount >= self._balance:
                 raise TransactionError
+            self.withdraw(amount, is_from_atm=False)
+            receiver_account.deposit(amount, is_from_atm=False)
             transaction = Transaction(amount, datetime.date.today(), self, receiver_account, False)
-            self.transactions.append(transaction)
-            self.bank.transactions.append(transaction)
-            self._balance -= amount
-            receiver_account._balance += amount
         else:
             if amount + 5 >= self._balance:
                 raise TransactionError
+            self.withdraw(amount + 5, is_from_atm=False)
+            receiver_account.deposit(amount, is_from_atm=False)
             transaction = Transaction(amount, datetime.date.today(), self, receiver_account, False)
-            self.transactions.append(transaction)
-            self.bank.transactions.append(transaction)
-            self._balance -= amount + 5
-            receiver_account._balance += amount
+            receiver_account.bank.transactions.append(transaction)
+        self.transactions.append(transaction)
+        receiver_account.transactions.append(transaction)
+        self.bank.transactions.append(transaction)
 
     def account_statement(self, from_date: datetime.date, to_date: datetime.date) -> list:
         """All transactions in given period."""
