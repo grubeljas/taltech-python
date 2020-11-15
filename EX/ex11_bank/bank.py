@@ -1,7 +1,6 @@
 """Bank."""
 import datetime
 import random
-import string
 
 
 class PersonError(Exception):
@@ -31,7 +30,7 @@ class Person:
         self.last_name = last_name
         if age <= 0:
             raise PersonError
-        self.age = age
+        self._age = age
         self.bank_account = None
 
     @property
@@ -42,12 +41,12 @@ class Person:
     @property
     def age(self) -> int:
         """Get person's age."""
-        return self.age
+        return self._age
 
     @age.setter
     def age(self, value: int):
         """Set person's age. Must be greater than 0."""
-        if value > 0:
+        if value <= 0:
             self._age = value
         else:
             raise PersonError
@@ -140,7 +139,7 @@ class Transaction:
         if self.is_from_atm:
             return f'({self.amount} €) ATM'
         else:
-            return f'({self.amount} €) {self.sender_account} -> {self.receiver_account}'
+            return f'({self.amount} €) {self.sender_account}->{self.receiver_account}'
 
 
 def create_number():
@@ -177,11 +176,11 @@ class Account:
         """Deposit money to account."""
         if amount <= 0:
             raise TransactionError
-        else:
+        elif is_from_atm:
             transaction = Transaction(amount, datetime.date.today(), self, self, is_from_atm)
             self.transactions.append(transaction)
             self.bank.transactions.append(transaction)
-            self._balance += amount
+        self._balance += amount
 
     def withdraw(self, amount: float, is_from_atm: bool = True):
         """Withdraw money from account."""
@@ -191,19 +190,23 @@ class Account:
             transaction = Transaction(-amount, datetime.date.today(), self, self, is_from_atm)
             self.transactions.append(transaction)
             self.bank.transactions.append(transaction)
-            self._balance -= amount
+        self._balance -= amount
 
     def transfer(self, amount: float, receiver_account: 'Account'):
         """Transfer money from one account to another."""
-        if amount <= 0 or amount > self._balance:
-            raise TransactionError
-        elif self.bank == receiver_account.bank:
+        if self == receiver_account or amount <= 0:
+            return TransactionError
+        if self.bank == receiver_account.bank:
+            if amount >= self._balance:
+                raise TransactionError
             transaction = Transaction(amount, datetime.date.today(), self, receiver_account, False)
             self.transactions.append(transaction)
             self.bank.transactions.append(transaction)
             self._balance -= amount
             receiver_account._balance += amount
         else:
+            if amount + 5 >= self._balance:
+                raise TransactionError
             transaction = Transaction(amount, datetime.date.today(), self, receiver_account, False)
             self.transactions.append(transaction)
             self.bank.transactions.append(transaction)
@@ -265,4 +268,3 @@ class Account:
         :return: account number
         """
         return str(self.number)
-
