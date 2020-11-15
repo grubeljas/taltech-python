@@ -29,29 +29,28 @@ class Person:
         """
         self.first_name = first_name
         self.last_name = last_name
+        if age <= 0:
+            raise PersonError
         self.age = age
         self.bank_account = None
 
     @property
     def full_name(self) -> str:
         """Get person's full name. Combination of first and last name."""
-        return self.first_name + ' ' + self.last_name
+        return f'{self.first_name} {self.last_name}'
 
     @property
     def age(self) -> int:
         """Get person's age."""
-        return self._age
+        return self.age
 
     @age.setter
     def age(self, value: int):
         """Set person's age. Must be greater than 0."""
-        try:
-            if value > 0:
-                self._age = value
-            else:
-                raise PersonError
-        except PersonError:
-            print('Age must be greater than 0.')
+        if value > 0:
+            self._age = value
+        else:
+            raise PersonError
 
     def __repr__(self) -> str:
         """
@@ -130,7 +129,7 @@ class Transaction:
         self.date = date
         self.sender_account = sender_account
         self.receiver_account = receiver_account
-        self.atm = is_from_atm
+        self.is_from_atm = is_from_atm
 
     def __repr__(self) -> str:
         """
@@ -138,10 +137,18 @@ class Transaction:
 
         :rtype: object's values displayed in a nice format
         """
-        if self.atm:
+        if self.is_from_atm:
             return f'({self.amount} €) ATM'
         else:
             return f'({self.amount} €) {self.sender_account} -> {self.receiver_account}'
+
+
+def create_number():
+    """Create random number for account."""
+    ee = 'EE'
+    for i in range(18):
+        ee += str(random.randint(0, 9))
+    return ee
 
 
 class Account:
@@ -158,15 +165,8 @@ class Account:
         self._balance = balance
         self.person = person
         self.bank = bank
-        self.number = self.create_number()
+        self.number = create_number()
         self.transactions = []
-
-    @staticmethod
-    def create_number():
-        ee = 'EE'
-        for i in range(20):
-            ee += str(random.randint(0, 9))
-        return ee
 
     @property
     def balance(self) -> float:
@@ -175,43 +175,40 @@ class Account:
 
     def deposit(self, amount: float, is_from_atm: bool = True):
         """Deposit money to account."""
-        try:
-            if amount <= 0:
-                raise TransactionError
-            elif is_from_atm:
-                transaction = Transaction(amount, datetime.date.today(), self, self, is_from_atm)
-                self.transactions.append(transaction)
-                self.bank.transactions.append(transaction)
-                self._balance += amount
-        except TransactionError:
-            print('Need more money')
+        if amount <= 0:
+            raise TransactionError
+        else:
+            transaction = Transaction(amount, datetime.date.today(), self, self, is_from_atm)
+            self.transactions.append(transaction)
+            self.bank.transactions.append(transaction)
+            self._balance += amount
 
     def withdraw(self, amount: float, is_from_atm: bool = True):
         """Withdraw money from account."""
-        try:
-            if amount <= 0 or amount > self._balance:
-                raise TransactionError
-            elif is_from_atm:
-                transaction = Transaction(-amount, datetime.date.today(), self, self, is_from_atm)
-                self.transactions.append(transaction)
-                self.bank.transactions.append(transaction)
-                self._balance -= amount
-        except TransactionError:
-            print('Wrong number')
+        if amount <= 0 or amount > self._balance:
+            raise TransactionError
+        elif is_from_atm:
+            transaction = Transaction(-amount, datetime.date.today(), self, self, is_from_atm)
+            self.transactions.append(transaction)
+            self.bank.transactions.append(transaction)
+            self._balance -= amount
 
     def transfer(self, amount: float, receiver_account: 'Account'):
         """Transfer money from one account to another."""
-        try:
-            if amount <= 0 or amount > self._balance:
-                raise TransactionError
-            else:
-                transaction = Transaction(amount, datetime.date.today(), self, receiver_account, False)
-                self.transactions.append(transaction)
-                self.bank.transactions.append(transaction)
-                self._balance -= amount
-                receiver_account._balance += amount
-        except TransactionError:
-            print('Wrong number')
+        if amount <= 0 or amount > self._balance:
+            raise TransactionError
+        elif self.bank == receiver_account.bank:
+            transaction = Transaction(amount, datetime.date.today(), self, receiver_account, False)
+            self.transactions.append(transaction)
+            self.bank.transactions.append(transaction)
+            self._balance -= amount
+            receiver_account._balance += amount
+        else:
+            transaction = Transaction(amount, datetime.date.today(), self, receiver_account, False)
+            self.transactions.append(transaction)
+            self.bank.transactions.append(transaction)
+            self._balance -= amount + 5
+            receiver_account._balance += amount
 
     def account_statement(self, from_date: datetime.date, to_date: datetime.date) -> list:
         """All transactions in given period."""
@@ -268,3 +265,4 @@ class Account:
         :return: account number
         """
         return str(self.number)
+
