@@ -231,7 +231,7 @@ class Account:
         """
         turnover = 0
         for trans in self.account_statement(from_date, to_date):
-            if trans.amount > 0:
+            if trans.amount > 0 and trans.is_from_atm or trans.is_from_atm == False and self == trans.receiver_account:
                 turnover += trans.amount
         return turnover
 
@@ -245,7 +245,7 @@ class Account:
         """
         turnover = 0
         for trans in self.account_statement(from_date, to_date):
-            if trans.amount < 0:
+            if trans.amount < 0 or not trans.is_from_atm and self == trans.sender_account:
                 turnover -= trans.amount
         return turnover
 
