@@ -245,9 +245,9 @@ class Account:
         """
         turnover = 0
         for trans in self.account_statement(from_date, to_date):
-            if trans.amount < 0 or not trans.is_from_atm and self == trans.sender_account:
-                turnover -= trans.amount
-            if not trans.is_from_atm and self.bank != trans.receiver_account.bank:
+            if trans.amount < 0 or not trans.is_from_atm:
+                turnover -= abs(trans.amount)
+            if trans.sender_account.bank != trans.receiver_account.bank:
                 turnover -= 5
         return turnover
 
@@ -270,3 +270,27 @@ class Account:
         :return: account number
         """
         return str(self.number)
+
+
+if __name__ == '__main__':
+    p1 = Person('Pavel', 'Bruh', 18)
+    p2 = Person('Ago', 'Loh', 40)
+    p3 = Person('Lolol', 'Kek', 69)
+    sw = Bank('Swedbank')
+    seb = Bank('SEB')
+    sw.add_customer(p1)
+    sw.add_customer(p3)
+    ba1 = p1.bank_account
+    seb.add_customer(p2)
+    ba2 = p2.bank_account
+    ba3 = p3.bank_account
+    print(sw.customers)
+    print(seb.customers)
+    ba1.deposit(10.0)
+    ba1.transfer(1.0, ba3)
+    ba1.transfer(4.0, ba2)
+    print(ba1.balance)
+    print(ba3.transactions)
+    print(ba1.transactions)
+    print(ba1.get_debit_turnover(datetime.date.today(), datetime.date.today()))
+    print(ba1.get_credit_turnover(datetime.date.today(), datetime.date.today()))
