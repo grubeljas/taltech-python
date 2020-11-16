@@ -247,6 +247,8 @@ class Account:
         for trans in self.account_statement(from_date, to_date):
             if trans.amount < 0 or not trans.is_from_atm and self == trans.sender_account:
                 turnover -= trans.amount
+            if not trans.is_from_atm and self.bank != trans.receiver_account.bank:
+                turnover -= 5
         return turnover
 
     def get_net_turnover(self, from_date: datetime.date, to_date: datetime.date) -> float:
