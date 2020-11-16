@@ -245,9 +245,9 @@ class Account:
         """
         turnover = 0
         for trans in self.account_statement(from_date, to_date):
-            if trans.amount < 0 or not trans.is_from_atm:
+            if trans.amount < 0 or not trans.is_from_atm and self == trans.sender_account:
                 turnover -= abs(trans.amount)
-            if trans.sender_account.bank != trans.receiver_account.bank:
+            if trans.sender_account.bank != trans.receiver_account.bank and self == trans.sender_account:
                 turnover -= 5
         return turnover
 
@@ -291,6 +291,6 @@ if __name__ == '__main__':
     ba1.transfer(4.0, ba2)
     print(ba1.balance)
     print(ba3.transactions)
-    print(ba1.transactions)
-    print(ba1.get_debit_turnover(datetime.date.today(), datetime.date.today()))
-    print(ba1.get_credit_turnover(datetime.date.today(), datetime.date.today()))
+    print(ba2.transactions)
+    print(ba2.get_debit_turnover(datetime.date.today(), datetime.date.today()))
+    print(ba2.get_credit_turnover(datetime.date.today(), datetime.date.today()))
