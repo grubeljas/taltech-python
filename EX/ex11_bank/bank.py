@@ -124,7 +124,7 @@ class Transaction:
         :param receiver_account: receiver's object
         :param is_from_atm: is transaction from atm
         """
-        self.amount = amount
+        self.amount = float(amount)
         self.date = date
         self.sender_account = sender_account
         self.receiver_account = receiver_account
@@ -209,7 +209,7 @@ class Account:
             receiver_account.deposit(amount, is_from_atm=False)
             transaction = Transaction(amount, datetime.date.today(), self, receiver_account, False)
             receiver_account.bank.transactions.append(transaction)
-            self.bank.transactions.append(transaction)
+        self.bank.transactions.append(transaction)
         self.transactions.append(transaction)
         receiver_account.transactions.append(transaction)
 
@@ -270,27 +270,3 @@ class Account:
         :return: account number
         """
         return str(self.number)
-
-
-if __name__ == '__main__':
-    p1 = Person('Pavel', 'Bruh', 18)
-    p2 = Person('Ago', 'Loh', 40)
-    p3 = Person('Lolol', 'Kek', 69)
-    sw = Bank('Swedbank')
-    seb = Bank('SEB')
-    sw.add_customer(p1)
-    sw.add_customer(p3)
-    ba1 = p1.bank_account
-    seb.add_customer(p2)
-    ba2 = p2.bank_account
-    ba3 = p3.bank_account
-    print(sw.customers)
-    print(seb.customers)
-    ba1.deposit(10.0)
-    ba1.transfer(1.0, ba3)
-    ba1.transfer(4.0, ba2)
-    print(ba1.balance)
-    print(ba3.transactions)
-    print(ba2.transactions)
-    print(ba2.get_debit_turnover(datetime.date.today(), datetime.date.today()))
-    print(ba2.get_credit_turnover(datetime.date.today(), datetime.date.today()))
