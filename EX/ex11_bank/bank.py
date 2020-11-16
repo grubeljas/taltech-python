@@ -139,7 +139,7 @@ class Transaction:
         if self.is_from_atm:
             return f'({self.amount} €) ATM'
         else:
-            return f'({self.amount} €) {self.sender_account.full_name} -> {self.receiver_account.full_name}'
+            return f'({self.amount} €) {self.sender_account.person} -> {self.receiver_account.person}'
 
 
 def create_number():
@@ -196,16 +196,18 @@ class Account:
         """Transfer money from one account to another."""
         if self == receiver_account:
             raise TransactionError
-        receiver_account.deposit(amount, is_from_atm=False)
-        transaction = Transaction(amount, datetime.date.today(), self, receiver_account, False)
         if self.bank == receiver_account.bank:
             if amount >= self._balance:
                 raise TransactionError
             self.withdraw(amount, is_from_atm=False)
+            receiver_account.deposit(amount, is_from_atm=False)
+            transaction = Transaction(amount, datetime.date.today(), self, receiver_account, False)
         else:
             if amount + 5 >= self._balance:
                 raise TransactionError
             self.withdraw(amount + 5, is_from_atm=False)
+            receiver_account.deposit(amount, is_from_atm=False)
+            transaction = Transaction(amount, datetime.date.today(), self, receiver_account, False)
             receiver_account.bank.transactions.append(transaction)
             self.bank.transactions.append(transaction)
         self.transactions.append(transaction)
