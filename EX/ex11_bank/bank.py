@@ -124,7 +124,7 @@ class Transaction:
         :param receiver_account: receiver's object
         :param is_from_atm: is transaction from atm
         """
-        self.amount = float(amount)
+        self.amount = amount
         self.date = date
         self.sender_account = sender_account
         self.receiver_account = receiver_account
