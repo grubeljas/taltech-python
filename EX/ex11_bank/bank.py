@@ -195,17 +195,17 @@ class Account:
     def transfer(self, amount: float, receiver_account: 'Account'):
         """Transfer money from one account to another."""
         not_match = self.bank != receiver_account.bank
-        if self == receiver_account or self._balance >= amount > 0.0 or not_match and self._balance >= amount + 5:
+        if self == receiver_account or self._balance >= amount > 0.0 or not_match and self._balance - 5 >= amount:
             raise TransactionError
         transaction = Transaction(amount, datetime.date.today(), self, receiver_account, False)
-        self.withdraw(amount)
-        receiver_account.deposit(amount)
-        self.bank.transactions.append(transaction)
+        self.withdraw(amount, False)
+        receiver_account.deposit(amount, False)
         self.transactions.append(transaction)
         receiver_account.transactions.append(transaction)
         if not_match:
-            self.withdraw(5)
+            self.withdraw(5, False)
             receiver_account.bank.transactions.append(transaction)
+            self.bank.transactions.append(transaction)
 
     def account_statement(self, from_date: datetime.date, to_date: datetime.date) -> list:
         """All transactions in given period."""
