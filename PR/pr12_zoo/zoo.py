@@ -56,9 +56,11 @@ def find_how_many_pumpkins_are_needed_to_feed_animals(animal_list: list) -> int:
     :param animal_list: input list
     :return: amount of pumpkins needed to sustain all the animals over the winter (rounded up).
     """
+    herb = filter_animals_based_on_diet(animal_list, 'herbivorous') + filter_animals_based_on_diet(animal_list, 'omnivorous')
+
     def amount_of_food(animal):
-        return round((animal.weight_range[0] + animal.weight_range[1]) * 5.4)
-    pumpkin = list(map(amount_of_food, animal_list))
+        return (animal.weight_range[0] + animal.weight_range[1]) * 5.4
+    pumpkin = list(map(amount_of_food, herb))
     return math.ceil(sum(pumpkin) / 3)
 
 
@@ -136,7 +138,7 @@ if __name__ == '__main__':
     animal_list = [elephant, fruit_bat, giraffe, lynx, bear]
     print(find_smallest_animal_by_weight(animal_list))  # Little red flying-fox
     print(list_species_and_scientific_names(animal_list))  # [('African bush elephant', 'Loxodonta africana'), ('Little red flying-fox', 'Pteropus scapulatus'), ('Giraffe', 'Giraffa camelopardalis'), ('Eurasian lynx', 'Lynx lynx'), ('Brown bear', 'Ursus arctos')]
-    print(find_how_many_pumpkins_are_needed_to_feed_animals(animal_list)) # 22227
+    print(find_how_many_pumpkins_are_needed_to_feed_animals(animal_list))  # 22227
     print(sort_alphabetically_by_scientific_name(animal_list))  # [Giraffe, African bush elephant, Eurasian lynx, Little red flying-fox, Brown bear]
     print(find_animals_whose_height_is_less_than(animal_list, 2))  # [Little red flying-fox, Eurasian lynx]
     print(filter_animals_based_on_diet(animal_list, "herbivorous"))  # [African bush elephant, Little red flying-fox, Giraffe]
