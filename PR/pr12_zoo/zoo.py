@@ -56,11 +56,10 @@ def find_how_many_pumpkins_are_needed_to_feed_animals(animal_list: list) -> int:
     :param animal_list: input list
     :return: amount of pumpkins needed to sustain all the animals over the winter (rounded up).
     """
-    herb = filter_animals_based_on_diet(animal_list, 'herbivorous') + filter_animals_based_on_diet(animal_list, 'omnivorous')
     def amount_of_food(animal):
         return round((animal.weight_range[0] + animal.weight_range[1]) * 5.4)
-    l = list(map(amount_of_food, herb))
-    return math.ceil(sum(l) / 3)
+    pumpkin = list(map(amount_of_food, animal_list))
+    return math.ceil(sum(pumpkin) / 3)
 
 
 def sort_alphabetically_by_scientific_name(animal_list: list) -> list:
@@ -70,7 +69,7 @@ def sort_alphabetically_by_scientific_name(animal_list: list) -> list:
     :param animal_list: input list
     :return: sorted list of animals
     """
-    return sorted(map(lambda x: x[1], list_species_and_scientific_names(animal_list)))
+    return sorted(animal_list, key=lambda x: x.scientific_name)
 
 
 def find_animals_whose_height_is_less_than(animal_list: list, height_limit: int) -> list:
@@ -135,12 +134,11 @@ if __name__ == '__main__':
     lynx = Animal("Eurasian lynx", "Lynx lynx", 7, (60, 75), (0.55, 0.75), "carnivorous", "temperate forest")
     bear = Animal("Brown bear", "Ursus arctos", 33, (130, 217), (1.4, 2.8), "omnivorous", "temperate forest")
     animal_list = [elephant, fruit_bat, giraffe, lynx, bear]
-
-    print(find_smallest_animal_by_weight(animal_list)) # Little red flying-fox
-    print(list_species_and_scientific_names(animal_list)) # [('African bush elephant', 'Loxodonta africana'), ('Little red flying-fox', 'Pteropus scapulatus'), ('Giraffe', 'Giraffa camelopardalis'), ('Eurasian lynx', 'Lynx lynx'), ('Brown bear', 'Ursus arctos')]
+    print(find_smallest_animal_by_weight(animal_list))  # Little red flying-fox
+    print(list_species_and_scientific_names(animal_list))  # [('African bush elephant', 'Loxodonta africana'), ('Little red flying-fox', 'Pteropus scapulatus'), ('Giraffe', 'Giraffa camelopardalis'), ('Eurasian lynx', 'Lynx lynx'), ('Brown bear', 'Ursus arctos')]
     print(find_how_many_pumpkins_are_needed_to_feed_animals(animal_list)) # 22227
-    print(sort_alphabetically_by_scientific_name(animal_list)) # [Giraffe, African bush elephant, Eurasian lynx, Little red flying-fox, Brown bear]
-    print(find_animals_whose_height_is_less_than(animal_list, 2)) # [Little red flying-fox, Eurasian lynx]
-    print(filter_animals_based_on_diet(animal_list, "herbivorous")) # [African bush elephant, Little red flying-fox, Giraffe]
-    print(find_animal_with_longest_lifespan(animal_list)) # African bush elephant
-    print(create_animal_descriptions(animal_list)) # ['African bush elephant (Loxodonta africana) lives in savannah and its diet is herbivorous. These animals can live up to 70 years and they weigh between 3000 kg and 6000 kg as adults.', 'Little red flying-fox (Pteropus scapulatus) lives in tropics and its diet is herbivorous. These animals can live up to 30 years and they weigh between 0.3 kg and 0.6 kg as adults.', 'Giraffe (Giraffa camelopardalis) lives in savannah and its diet is herbivorous. These animals can live up to 25 years and they weigh between 1200 kg and 1800 kg as adults.', 'Eurasian lynx (Lynx lynx) lives in temperate forest and its diet is carnivorous. These animals can live up to 7 years and they weigh between 60 kg and 75 kg as adults.', 'Brown bear (Ursus arctos) lives in temperate forest and its diet is omnivorous. These animals can live up to 33 years and they weigh between 130 kg and 217 kg as adults.']
+    print(sort_alphabetically_by_scientific_name(animal_list))  # [Giraffe, African bush elephant, Eurasian lynx, Little red flying-fox, Brown bear]
+    print(find_animals_whose_height_is_less_than(animal_list, 2))  # [Little red flying-fox, Eurasian lynx]
+    print(filter_animals_based_on_diet(animal_list, "herbivorous"))  # [African bush elephant, Little red flying-fox, Giraffe]
+    print(find_animal_with_longest_lifespan(animal_list))  # African bush elephant
+    print(create_animal_descriptions(animal_list))  # ['African bush elephant (Loxodonta africana) lives in savannah and its diet is herbivorous. These animals can live up to 70 years and they weigh between 3000 kg and 6000 kg as adults.', 'Little red flying-fox (Pteropus scapulatus) lives in tropics and its diet is herbivorous. These animals can live up to 30 years and they weigh between 0.3 kg and 0.6 kg as adults.', 'Giraffe (Giraffa camelopardalis) lives in savannah and its diet is herbivorous. These animals can live up to 25 years and they weigh between 1200 kg and 1800 kg as adults.', 'Eurasian lynx (Lynx lynx) lives in temperate forest and its diet is carnivorous. These animals can live up to 7 years and they weigh between 60 kg and 75 kg as adults.', 'Brown bear (Ursus arctos) lives in temperate forest and its diet is omnivorous. These animals can live up to 33 years and they weigh between 130 kg and 217 kg as adults.']
