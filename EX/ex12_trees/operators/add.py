@@ -11,16 +11,23 @@ class Add(Operator):
     def __init__(self, left: TreeNode, right: TreeNode):
         """default constructor."""
         super().__init__((left, right))
+        self.left = left
+        self.right = right
 
     @property
     def priority(self):
         """:return the value of the operation."""
-        return -1
+        return 4
+
+    @property
+    def associativity(self):
+        """abstract method witch should be overridden to return a boolean when the node is not associative."""
+        return False
 
     @property
     def default_operator(self):
         """:return the default operator of the operation."""
-        return DefaultOperator(lambda x, y: -1, "?")
+        return DefaultOperator(lambda x, y: x + y, "+")
 
     @property
     def actions(self):

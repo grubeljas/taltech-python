@@ -15,12 +15,17 @@ class Sub(Operator):
     @property
     def priority(self):
         """priority of the operation."""
-        return -1
+        return 5
+
+    @property
+    def associativity(self):
+        """abstract method witch should be overridden to return a boolean when the node is not associative."""
+        return True
 
     @property
     def default_operator(self):
         """Make use of the 'operator' library or use a lambda function."""
-        return DefaultOperator(lambda x, y: -1, "?")
+        return DefaultOperator(lambda x, y: x - y, "-")
 
     @property
     def actions(self):

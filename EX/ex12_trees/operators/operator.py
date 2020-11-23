@@ -10,23 +10,33 @@ class Operator(TreeNode):
     def __init__(self, *args):
         """Store the given arguments somehow."""
         super().__init__(*args)
+        self.left = args[0][0]
+        self.right = args[0][1]
 
     def apply(self):
         """Make use of the *args to compute the value of the given subtree. Recursion is your friend."""
-        return -1
+        return self.default_operator(self.left.apply(), self.right.apply())
 
     def class_str(self):
         """:return class string representation of the object."""
-        return "Add(Leaf(5), Leaf(6))"
+        return f"{type(self).__name__}({self.left.class_str()}, {self.right.class_str()})"
 
     def __str__(self):
         """:return the mathematical string representation of the tree with least amount of parenthesis."""
-        return "5 + 6"
+        if self.priority < self.left.priority and self.priority < self.right.priority:
+            return f'({self.left}) {self.default_operator.mark} ({self.right})'
+        if self.priority < self.left.priority:
+            return f'({self.left}) {self.default_operator.mark} {self.right}'
+        if self.priority < self.right.priority:
+            return f'{self.left} {self.default_operator.mark} ({self.right})'
+        else:
+            return f'{self.left} {self.default_operator.mark} {self.right}'
 
     @property
+    @abstractmethod
     def associativity(self):
         """abstract method witch should be overridden to return a boolean when the node is not associative."""
-        return False
+        pass
 
     @property
     @abstractmethod

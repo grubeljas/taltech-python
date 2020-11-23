@@ -8,7 +8,7 @@ class TreeNode(metaclass=ABCMeta):
 
     def __init__(self, *args):
         """:param make use of *args and store them in a way that it is easy to use them."""
-        pass
+        self.arg = args
 
     @abstractmethod
     def apply(self):
@@ -27,8 +27,21 @@ class TreeNode(metaclass=ABCMeta):
 
     def __eq__(self, other):
         """:return True when 2 object trees have the same shape and values."""
+        if len(self.arg) == 1:
+            if self.arg[0] == other.arg[0]:
+                return True
+        elif len(self.arg) != 1:
+            if self.left == other.left and self.right == other.right:
+                return True
         return False
 
     def __ne__(self, other):
         """:return True when 2 object trees have a different shape and/or values."""
-        return False
+        if len(self.arg) == 1:
+            if self.arg[0] != other.arg[0]:
+                return True
+        elif len(self.arg) != 1:
+            if self.left != other.left or self.right != other.right:
+                return True
+        else:
+            return False

@@ -17,8 +17,13 @@ class Leaf(TreeNode):
 
     def class_str(self):
         """:return class string representation of the object."""
-        return "Leaf(5)"
+        return f"Leaf({self.__value})"
 
     def __str__(self):
         """return string format of value."""
-        return "4"
+        return str(self.__value)
+
+    @property
+    def priority(self):
+        """abstract method witch should be overridden to return priority of the node."""
+        return 0

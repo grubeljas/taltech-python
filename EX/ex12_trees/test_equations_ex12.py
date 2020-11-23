@@ -23,3 +23,4 @@ def test_addition_adds_when_given_leaves_with_numbers():
 def test_subtract_subtracts_when_given_leaves_with_numbers():
     """."""
     assert Sub(Leaf(5), Leaf(6)).apply() == -1
+    assert Leaf(5).__str__() == '5'
