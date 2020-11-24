@@ -3,6 +3,7 @@
 from default_operator import DefaultOperator
 from operators.operator import Operator
 from tree_node import TreeNode
+from operators.leaf import Leaf
 
 
 class Sub(Operator):

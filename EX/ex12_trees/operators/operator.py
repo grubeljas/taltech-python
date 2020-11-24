@@ -27,7 +27,7 @@ class Operator(TreeNode):
             return f'({self.left}) {self.default_operator.mark} ({self.right})'
         if self.priority < self.left.priority:
             return f'({self.left}) {self.default_operator.mark} {self.right}'
-        if self.priority < self.right.priority:
+        if self.priority < self.right.priority or self.associativity and type(self.right).__name__ != 'Leaf':
             return f'{self.left} {self.default_operator.mark} ({self.right})'
         else:
             return f'{self.left} {self.default_operator.mark} {self.right}'

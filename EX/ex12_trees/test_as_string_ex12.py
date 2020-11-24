@@ -54,3 +54,11 @@ def test_division_given_addition_to_string():
     tree = Div(Add(Leaf(12), Leaf(6)), Leaf(6))
     assert tree.apply() == 3
     assert tree.__str__() == "(12 + 6) / 6"
+
+
+@pytest.mark.timeout(1.0)
+def test_division_given_addition_to_string():
+    """."""
+    tree = Sub(Sub(Leaf(12), Leaf(6)), Sub(Leaf(6), Leaf(4)))
+    assert tree.apply() == 4
+    assert tree.__str__() == "(12 - 6) - (6 - 4)"
