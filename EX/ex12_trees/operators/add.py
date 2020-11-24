@@ -38,7 +38,3 @@ class Add(Operator):
             (set, set): {},  # set union
             (set, int): {}  # add to set
         }
-
-
-tree = Add(Sub(Leaf(5), Leaf(6)), Sub(Leaf(5), Leaf(6)))
-print(tree)
