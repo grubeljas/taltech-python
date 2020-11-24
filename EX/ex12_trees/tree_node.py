@@ -31,7 +31,7 @@ class TreeNode(metaclass=ABCMeta):
             if self.arg[0] == other.arg[0]:
                 return True
         elif len(self.arg) != 1:
-            if self.left == other.left and self.right == other.right and self == other:
+            if self.left == other.left and self.right == other.right and self == other or self.apply() != other.apply():
                 return True
         return False
 
@@ -41,7 +41,7 @@ class TreeNode(metaclass=ABCMeta):
             if self.arg[0] != other.arg[0]:
                 return True
         elif len(self.arg) != 1:
-            if self.left != other.left or self.right != other.right or self != other:
+            if self.left != other.left or self.right != other.right or self != other or self.apply() != other.apply():
                 return True
         else:
             return False

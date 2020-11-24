@@ -3,6 +3,8 @@
 from default_operator import DefaultOperator
 from operators.operator import Operator
 from tree_node import TreeNode
+from operators.leaf import Leaf
+from operators.sub import Sub
 
 
 class Add(Operator):
@@ -36,3 +38,7 @@ class Add(Operator):
             (set, set): {},  # set union
             (set, int): {}  # add to set
         }
+
+
+tree = Add(Sub(Leaf(5), Leaf(6)), Sub(Leaf(5), Leaf(6)))
+print(tree)
