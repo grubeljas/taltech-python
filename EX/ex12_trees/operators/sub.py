@@ -3,7 +3,6 @@
 from default_operator import DefaultOperator
 from operators.operator import Operator
 from tree_node import TreeNode
-from operators.leaf import Leaf
 
 
 class Sub(Operator):
@@ -16,7 +15,7 @@ class Sub(Operator):
     @property
     def priority(self):
         """priority of the operation."""
-        return 4
+        return 5
 
     @property
     def associativity(self):
@@ -26,11 +25,12 @@ class Sub(Operator):
     @property
     def default_operator(self):
         """Make use of the 'operator' library or use a lambda function."""
-        return DefaultOperator(lambda x, y: x - y, "-")
+        return DefaultOperator(self.actions[type(self.left.apply()), type(self.right.apply())], "-")
 
     @property
     def actions(self):
         """:return a dictionary of custom operations."""
         return {
-            (set, int): {}  # set without the element
+            (set, int): lambda x, y: x - {y},  # set without the element
+            (int, int): lambda x, y: x - y
         }

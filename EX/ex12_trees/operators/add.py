@@ -3,8 +3,6 @@
 from default_operator import DefaultOperator
 from operators.operator import Operator
 from tree_node import TreeNode
-from operators.leaf import Leaf
-from operators.sub import Sub
 
 
 class Add(Operator):
@@ -29,12 +27,14 @@ class Add(Operator):
     @property
     def default_operator(self):
         """:return the default operator of the operation."""
-        return DefaultOperator(lambda x, y: x + y, "+")
+        return DefaultOperator(self.actions[type(self.left.apply()), type(self.right.apply())], "+")
 
     @property
     def actions(self):
         """:return a dictionary of custom operations."""
         return {
-            (set, set): {},  # set union
-            (set, int): {}  # add to set
+            (int, int): lambda x, y: x + y,
+            (set, set): lambda x, y: x | y,  # set union
+            (set, int): lambda x, y: x | {y},  # add to set
+            (int, set): lambda x, y: {y} | x
         }
