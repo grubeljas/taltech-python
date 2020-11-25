@@ -5,13 +5,16 @@ class DefaultOperator:
     """Default operator is a wrapper to a mathematical function with a string form."""
 
     def __init__(self, equation, mark):
+        """."""
         self.equation = equation
         self.mark = mark
 
     def __call__(self, *args):
+        """."""
         return self.equation(args[0], args[1])
 
     def __str__(self):
+        """."""
         return self.mark
 
 

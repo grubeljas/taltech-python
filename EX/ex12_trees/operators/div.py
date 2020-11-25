@@ -35,5 +35,5 @@ class Div(Operator):
         return {
             (set, set): lambda x, y: x - y,  # set exclusion
             (set, int): lambda x, y: x - {y},  # remove from set
-            (int, int): lambda x, y: x / y,  # integer division
+            (int, int): lambda x, y: int(x / y),  # integer division
         }
