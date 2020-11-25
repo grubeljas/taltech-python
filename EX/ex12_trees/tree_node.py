@@ -27,21 +27,8 @@ class TreeNode(metaclass=ABCMeta):
 
     def __eq__(self, other):
         """:return True when 2 object trees have the same shape and values."""
-        if len(self.arg) == 1:
-            if self.arg[0] == other.arg[0]:
-                return True
-        elif len(self.arg) != 1:
-            if self.left == other.left and self.right == other.right and type(self).__name__ == type(other).__name__:
-                return True
-        return False
+        return self.__str__() == other.__str__()
 
     def __ne__(self, other):
         """:return True when 2 object trees have a different shape and/or values."""
-        if len(self.arg) == 1:
-            if self.arg[0] != other.arg[0]:
-                return True
-        elif len(self.arg) != 1:
-            if self.left != other.left or self.right != other.right or type(self).__name__ != type(other).__name__:
-                return True
-        else:
-            return False
+        return self.__str__() != other.__str__()

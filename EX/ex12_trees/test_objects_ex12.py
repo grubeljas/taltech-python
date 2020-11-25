@@ -4,6 +4,7 @@ import pytest
 
 from operators.leaf import Leaf
 from operators.add import Add
+from operators.sub import Sub
 
 
 @pytest.mark.timeout(1.0)
@@ -28,3 +29,5 @@ def test_addition_equals_addition_when_same_value():
 def test_addition_doesnt_equal_addition_when_different_value():
     """."""
     assert Add(Leaf(2), Leaf(1)) != Add(Leaf(1), Leaf(2))
+    print(Sub(Leaf(1), Leaf(2)))
+    assert Add(Leaf(1), Leaf(2)) != Sub(Leaf(1), Leaf(2))
