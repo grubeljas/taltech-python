@@ -17,7 +17,7 @@ class Div(Operator):
     @property
     def priority(self):
         """priority of the operation."""
-        return 3
+        return 2
 
     @property
     def associativity(self):
@@ -36,5 +36,4 @@ class Div(Operator):
             (set, set): lambda x, y: x - y,  # set exclusion
             (set, int): lambda x, y: x - {y},  # remove from set
             (int, int): lambda x, y: x / y,  # integer division
-            (int, set): lambda x, y: {x} - y  # remove from set
         }

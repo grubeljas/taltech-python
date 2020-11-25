@@ -17,6 +17,7 @@ def test_leaf_apply_yields_number_when_given_a_number():
 def test_addition_adds_when_given_leaves_with_numbers():
     """."""
     assert Add(Leaf(5), Leaf(6)).apply() == 11
+    assert Add(Sub(Leaf(5), Leaf(6)), Sub(Leaf(5), Leaf(6))).__str__() == "5 - 6 + 5 - 6"
 
 
 @pytest.mark.timeout(1.0)

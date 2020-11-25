@@ -5,6 +5,7 @@ import pytest
 from operators.leaf import Leaf
 from operators.add import Add
 from operators.mul import Mul
+from operators.div import Div
 
 
 @pytest.mark.timeout(1.0)
@@ -23,6 +24,7 @@ def test_set_add_adds_when_given_leaves_with_sets():
 def test_set_multiply_multiplies_when_given_leaves_with_sets__second_single_element():
     """."""
     assert Mul(Leaf({5, 6}), Leaf({3})).apply() == {frozenset({5, 3}), frozenset({6, 3})}
+    assert Div(Div(Leaf({5, 6, 4}), Leaf({5})), Leaf(4)).apply() == {6}
 
 
 @pytest.mark.timeout(1.0)

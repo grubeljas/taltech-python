@@ -15,7 +15,7 @@ class Sub(Operator):
     @property
     def priority(self):
         """priority of the operation."""
-        return 5
+        return 4
 
     @property
     def associativity(self):
