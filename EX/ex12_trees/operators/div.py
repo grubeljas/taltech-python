@@ -27,7 +27,7 @@ class Div(Operator):
     @property
     def default_operator(self):
         """Make use of the 'operator' library or use a lambda function."""
-        return DefaultOperator(lambda x, y: x / y, "/")
+        return DefaultOperator(self.actions[type(self.left.apply()), type(self.right.apply())], "/")
 
     @property
     def actions(self):
