@@ -11,6 +11,8 @@ class Mul(Operator):
     def __init__(self, left: TreeNode, right: TreeNode):
         """default constructor."""
         super().__init__((left, right))
+        self.left = left
+        self.right = right
 
     @property
     def priority(self):
