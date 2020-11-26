@@ -34,5 +34,7 @@ class Sub(Operator):
         """:return a dictionary of custom operations."""
         return {
             (set, int): lambda x, y: x - {y},  # set without the element
-            (int, int): lambda x, y: x - y
+            (int, int): lambda x, y: x - y,
+            (int, set): lambda x, y: {x} - y,
+            (set, set): lambda x, y: x - y
         }
