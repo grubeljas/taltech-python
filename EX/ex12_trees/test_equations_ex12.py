@@ -31,3 +31,4 @@ def test_subtract_subtracts_when_given_leaves_with_numbers():
     """."""
     assert Sub(Leaf(5), Leaf(6)).apply() == -1
     assert Leaf(5).__str__() == '5'
+    assert Div(Leaf(3), Div(Add(Leaf(12), Leaf(6)), Leaf(6))).__str__() == "3 / ((12 + 6) / 6)"

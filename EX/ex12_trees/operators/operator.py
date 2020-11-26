@@ -23,11 +23,11 @@ class Operator(TreeNode):
 
     def __str__(self):
         """:return the mathematical string representation of the tree with least amount of parenthesis."""
-        if self.priority < self.left.priority or self.associativity and self.left.priority:
+        if self.priority < self.left.priority or self.associativity and self.left.priority and type(self).__name__ == type(self.left).__name__:
             a = f'({self.left.__str__()})'
         else:
             a = f'{self.left.__str__()}'
-        if self.priority < self.right.priority or self.associativity and self.right.priority:
+        if self.priority < self.right.priority or self.associativity and self.right.priority and type(self).__name__ == type(self.right).__name__:
             b = f'({self.right.__str__()})'
         else:
             b = f'{self.right.__str__()}'

@@ -22,7 +22,7 @@ class Div(Operator):
     @property
     def associativity(self):
         """abstract method witch should be overridden to return a boolean when the node is not associative."""
-        return False
+        return True
 
     @property
     def default_operator(self):
