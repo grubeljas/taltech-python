@@ -37,10 +37,8 @@ def get_links_from_spreadsheet(id: str, token: str) -> list:
 def get_links_from_playlist(link: str, developer_key: str) -> list:
     """Should get a list of links to songs in the Youtube playlist with the given address."""
     os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
-
     api_service_name = "youtube"
     api_version = "v3"
-
 
     youtube = build(
         api_service_name, api_version, developerKey=developer_key)
