@@ -40,26 +40,10 @@ def get_links_from_playlist(link: str, developer_key: str) -> list:
 
     api_service_name = "youtube"
     api_version = "v3"
-    creds = None
-    if os.path.exists('tok.pickle'):
-        with open('tok.pickle', 'rb') as tok:
-            creds = pickle.load(tok)
-        # If there are no (valid) credentials available, let the user log in.
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                developer_key, ["https://www.googleapis.com/auth/youtube.readonly"])
-            creds = flow.run_local_server(port=0)
-            creds = flow.run_console()
-        # Save the credentials for the next run
-        with open('tok.pickle', 'wb') as tok:
-            pickle.dump(creds, tok)
-    # Get credentials and create an API client
+
 
     youtube = build(
-        api_service_name, api_version, credentials=creds)
+        api_service_name, api_version, developerKey=developer_key)
 
     request = youtube.playlistItems().list(
         part="snippet,contentDetails",
@@ -81,4 +65,5 @@ def get_links_from_playlist(link: str, developer_key: str) -> list:
 if __name__ == '__main__':
     id = '1l2r7lFeKavPCmOkn-6Lf2ttPKB6By6uCeDK44ZftJL4'
     token = 'sheer'
-    print(get_links_from_playlist('PLt2aVE6fZ9_BHlRFemMH4w3TIXzpinO3C', 'credentials.json'))
+    key = 'AIzaSyCgptX0vnI6_kG6FCbFEfYaJk_mTSoTWk4'
+    print(get_links_from_playlist('PLtz_yutonf6tiGwYpxDm-0aXYVkZBzAsW', key))
