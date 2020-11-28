@@ -50,7 +50,7 @@ def get_links_from_playlist(link: str, developer_key: str) -> list:
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                'credentials.json', ["https://www.googleapis.com/auth/youtube.readonly"])
+                developer_key, ["https://www.googleapis.com/auth/youtube.readonly"])
             creds = flow.run_local_server(port=0)
             creds = flow.run_console()
         # Save the credentials for the next run
@@ -70,13 +70,15 @@ def get_links_from_playlist(link: str, developer_key: str) -> list:
     links = []
     i = 1
     for video in response['items']:
-        link = f'https://www.youtube.com/watch?v={video["contentDetails"]["videoId"]}&list={video["snippet"]["playlistId"]}&index={i}&ab_channel={video["snippet"]["channelId"]}'
+        plid = video["snippet"]["playlistId"]
+        vid = video["contentDetails"]["videoId"]
+        link = f'https://www.youtube.com/watch?v={vid}&list={plid}&index={i}&ab_channel={video["snippet"]["channelId"]}'
         links.append(link)
         i += 1
     return links
 
+
 if __name__ == '__main__':
     id = '1l2r7lFeKavPCmOkn-6Lf2ttPKB6By6uCeDK44ZftJL4'
     token = 'sheer'
-    #print(get_links_from_spreadsheet(id, token))
-    print(get_links_from_playlist('PLt2aVE6fZ9_BHlRFemMH4w3TIXzpinO3C', 'a'))
+    print(get_links_from_playlist('PLt2aVE6fZ9_BHlRFemMH4w3TIXzpinO3C', 'credentials.json'))
