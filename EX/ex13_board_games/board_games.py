@@ -70,32 +70,40 @@ class Statistics:
                         i += len(game[1])
                 return i
         if path.startswith('/player'):
-            if len(paths) == 1:
-                return list(self.players.keys())
-            elif paths[2] == 'amount':
-                return self.players[paths[1]].number
-            elif paths[2] == 'favourite':
-                return max(self.players[paths[1]].games, key=lambda x: int(self.players[paths[1]].games[x]))
-            elif paths[2] == 'won':
-                return self.players[paths[1]].won_games
+            return self.player(paths)
         if path.startswith('/game'):
-            if len(paths) == 1:
-                return list(self.games.keys())
-            elif paths[2] == 'amount':
-                return len(self.games[paths[1]].matches)
-            elif paths[2] == 'player-amount':
-                return self.games[paths[1]].player_amount()
-            elif paths[2] == 'most-wins':
-                return max(self.games[paths[1]].winners, key=lambda x: self.games[paths[1]].winners[x])
-            elif paths[2] == 'most-frequent-winner':
-                return max(self.games[paths[1]].rate(), key=lambda x: self.games[paths[1]].rate()[x])
-            elif self.games[paths[1]].type != 'winner':
-                if paths[2] == 'most-losses':
-                    return max(self.games[paths[1]].losers, key=lambda x: self.games[paths[1]].losers[x])
-                elif paths[2] == 'most-frequent-loser':
-                    return max(self.games[paths[1]].rate(0), key=lambda x: self.games[paths[1]].rate(0)[x])
-                elif paths[2] == 'record-holder' and self.info[paths[1]][0] == 'points':
-                    return self.games[paths[1]].find_best()
+            return self.game(paths)
+
+    def player(self, paths):
+        """Get player info."""
+        if len(paths) == 1:
+            return list(self.players.keys())
+        elif paths[2] == 'amount':
+            return self.players[paths[1]].number
+        elif paths[2] == 'favourite':
+            return max(self.players[paths[1]].games, key=lambda x: int(self.players[paths[1]].games[x]))
+        elif paths[2] == 'won':
+            return self.players[paths[1]].won_games
+
+    def game(self, paths):
+        """Get game info."""
+        if len(paths) == 1:
+            return list(self.games.keys())
+        elif paths[2] == 'amount':
+            return len(self.games[paths[1]].matches)
+        elif paths[2] == 'player-amount':
+            return self.games[paths[1]].player_amount()
+        elif paths[2] == 'most-wins':
+            return max(self.games[paths[1]].winners, key=lambda x: self.games[paths[1]].winners[x])
+        elif paths[2] == 'most-frequent-winner':
+            return max(self.games[paths[1]].rate(), key=lambda x: self.games[paths[1]].rate()[x])
+        elif self.games[paths[1]].type != 'winner':
+            if paths[2] == 'most-losses':
+                return max(self.games[paths[1]].losers, key=lambda x: self.games[paths[1]].losers[x])
+            elif paths[2] == 'most-frequent-loser':
+                return max(self.games[paths[1]].rate(0), key=lambda x: self.games[paths[1]].rate(0)[x])
+            elif paths[2] == 'record-holder' and self.info[paths[1]][0] == 'points':
+                return self.games[paths[1]].find_best()
 
 
 class Player:
@@ -170,8 +178,9 @@ class Game:
             for match in self.matches:
                 if person in match:
                     if int(match[person]) > i:
+                        best = person
                         i = int(match[person])
-        return i
+        return person
 
     def player_amount(self):
         """Count how many people have played in this game."""
