@@ -180,7 +180,7 @@ class Game:
                     if int(match[person]) > i:
                         best = person
                         i = int(match[person])
-        return person
+        return best
 
     def player_amount(self):
         """Count how many people have played in this game."""
