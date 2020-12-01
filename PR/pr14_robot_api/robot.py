@@ -5,4 +5,6 @@ robot = PiBot()
 while robot.get_second_line_sensor_from_left() > 150:
     robot.set_wheels_speed(80)
     robot.sleep(3)
-    robot.set_wheels_speed(0)
+robot.set_wheels_speed(30)
+robot.sleep(1)
+robot.set_wheels_speed(0)
