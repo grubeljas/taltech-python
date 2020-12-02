@@ -6,7 +6,7 @@ robot.set_wheels_speed(30)
 robot.sleep(1)
 print(robot.get_left_line_sensors())
 for i in range(100):
-    robot.set_left_wheel_speed(-10)
+    robot.set_left_wheel_speed(-30)
     robot.set_right_wheel_speed(30)
     robot.sleep(1)
     robot.set_wheels_speed(30)
