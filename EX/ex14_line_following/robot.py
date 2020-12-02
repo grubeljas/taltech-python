@@ -12,3 +12,4 @@ if robot.get_rear_right_side_ir() < 400:
 robot.set_wheels_speed(30)
 robot.sleep(1)
 robot.set_wheels_speed(0)
+robot.done()
