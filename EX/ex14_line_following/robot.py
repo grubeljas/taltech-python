@@ -2,7 +2,7 @@
 from PiBot import PiBot
 
 robot = PiBot()
-for i in range(100):
+for i in range(4):
     robot.set_left_wheel_speed(-25)
     robot.set_right_wheel_speed(80)
     robot.sleep(1)
