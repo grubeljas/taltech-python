@@ -22,4 +22,5 @@ while 0 in robot.get_line_sensors() and i > -4:
         robot.sleep(0.05)
         print(robot.get_line_sensors())
         i -= 1
+    break
 robot.set_wheels_speed(0)
