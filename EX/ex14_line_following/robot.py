@@ -2,7 +2,10 @@
 from PiBot import PiBot
 
 robot = PiBot()
-for i in range(4):
+while robot.get_line_sensors()[1] > 500:
+    robot.set_wheels_speed(10)
+    robot.sleep(0.05)
+while sum(robot.get_line_sensors()):
     robot.set_wheels_speed(12)
     robot.sleep(3)
     robot.set_right_wheel_speed(-25)
