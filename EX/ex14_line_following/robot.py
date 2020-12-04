@@ -19,7 +19,7 @@ while 0 in robot.get_line_sensors():
         i = 1
     if i == 0:
         a += 1
-        if a == 5:
+        if a == 20:
             break
 robot.set_wheels_speed(0)
 robot.done()
