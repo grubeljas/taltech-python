@@ -4,10 +4,9 @@ from PiBot import PiBot
 robot = PiBot()
 
 a = 0
-black = [i for i in range(100)]
-while black in robot.get_line_sensors():
+while 0 or 16 in robot.get_line_sensors():
     i = 0
-    if robot.get_third_line_sensor_from_left() > 0:
+    if robot.get_third_line_sensor_from_left() > 0 or robot.get_leftmost_line_sensor() == 0:
         robot.set_right_wheel_speed(-2)
         robot.set_left_wheel_speed(2)
         robot.sleep(0.005)
