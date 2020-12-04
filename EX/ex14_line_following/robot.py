@@ -3,6 +3,7 @@ from PiBot import PiBot
 
 robot = PiBot()
 
+a = 0
 while 0 in robot.get_line_sensors():
     i = 0
     if robot.get_third_line_sensor_from_left() > 0:
@@ -11,10 +12,12 @@ while 0 in robot.get_line_sensors():
         robot.sleep(0.005)
         i = 1
     if robot.get_third_line_sensor_from_left() == 0:
-        robot.set_wheels_speed(10)
+        robot.set_wheels_speed(8)
         robot.sleep(0.01)
         i = 1
     if i == 0:
-        break
+        a += 1
+        if a == 5:
+            break
 robot.set_wheels_speed(0)
 robot.done()
