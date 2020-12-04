@@ -8,7 +8,7 @@ while 0 in robot.get_line_sensors():
     if robot.get_third_line_sensor_from_left() > 0:
         robot.set_right_wheel_speed(-20)
         robot.set_left_wheel_speed(20)
-        robot.sleep(0.01)
+        robot.sleep(0.005)
         i = 1
     if robot.get_third_line_sensor_from_left() == 0:
         robot.set_wheels_speed(10)
