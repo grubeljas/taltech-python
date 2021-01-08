@@ -47,8 +47,9 @@ def get_names_from_results(results_string: str, min_result: int) -> list:
     for name in names:
         score = name.split(' ')[-1]
         name = name.split(' ')[:-1]
-        name_scores[name] = score
-    for i in name_scores.values():
+        if name:
+            name_scores[name[0]] = score
+    for i in name_scores.items():
         if int(i[1]) >= min_result:
             choosens.append(i[0])
     return choosens
@@ -76,33 +77,33 @@ def tic_tac_toe(game: list) -> int:
     """
     for row in game:
         if row[0] == row[1] == row[2] and row[0] != 0:
-            return row[0]
+            return int(row[0])
     for i in range(3):
         if game[0][i] == game[1][i] == game[2][i] and game[0][i] != 0:
-            return game[0][i]
+            return int(game[0][i])
     if game[0][0] == game[1][1] == game[2][2] or game[0][2] == game[1][1] == game[2][1]:
         if game[1][1] != 0:
-            return game[1][1]
+            return int(game[1][1])
     return 0
 
 
 def rainbows(field: str, lower=False) -> int:
     """
-    This is a function to count rainbows.
+    Count rainbows.
 
     #4
 
     Function has to be recursive.
 
-    assert rainbows("rainbowThisIsJustSomeNoise") == 1  # Lisaks vikerkaarele on veel sümboleid
-    assert rainbows("WoBniar") == 1  # Vikerkaar on tagurpidi ja sisaldab suuri tähti
-    assert rainbows("rainbowobniar") == 1  # Kaks vikerkaart jagavad tähte seega üks neist ei ole valiidne
+    assert rainbows("rainbowThisIsJustSomeNoise") == 1
+    assert rainbows("WoBniar") == 1
+    assert rainbows("rainbowobniar") == 1
 
     :param field: string to search rainbows from
     :return: number of rainbows in the string
     """
     field = list(field.lower())
-    if set('rainbow') in set(field):
+    if set('rainbow') - set(field) == set():
         for i in list('rainbow'):
             field.remove(i)
         return 1 + rainbows(str(field))
@@ -131,11 +132,13 @@ def longest_substring(text: str) -> str:
     subs = []
     holder = ''
     for char in text:
-        if char.lower() in holder.lower():
+        if char.lower() in holder.lower() or text.index(char) == len(text) - 1:
+            if char.lower() not in holder.lower():
+                holder += char
             subs.append(holder)
             holder = ''
         holder += char
-    return max(subs)
+    return max(subs, key=lambda x: len(x))
 
 
 class Student:
@@ -155,9 +158,10 @@ def create_student(name: str, grades: list, credit_points: int) -> Student:
     Round the average grade up to three decimal places.
     If the list of grades is empty, the average grade will be 0.
     """
-    if not grades:
+    try:
+        average = sum(grades) / len(grades)
+    except ZeroDivisionError:
         average = 0
-    average = sum(grades) / len(grades)
     return Student(name, average, credit_points)
 
 
@@ -365,6 +369,13 @@ class Hotel:
 
 
 if __name__ == '__main__':
+    print(get_names_from_results("ago 123,peeter 11", 0))
+    print(get_names_from_results("ago 123,peeter 11,33", 10))
+    print(get_names_from_results("ago 123,peeter 11", 100))
+    print(get_names_from_results("ago 123,peeter 11,kitty11!! 33", 11))
+    print(get_names_from_results("ago 123,peeter 11,kusti riin 14", 12))
+    print(tic_tac_toe([[1, 0, 0], [1, 1, 2], [0, 2, 2]]))
+    print(longest_substring('babcdEFghij'))
     hotel = Hotel()
     room1 = Room(1, 100)
     room1.add_feature("tv")
@@ -393,4 +404,3 @@ if __name__ == '__main__':
         'sauna': 300
     }
     assert hotel.get_most_profitable_feature() == 'tv'
-
