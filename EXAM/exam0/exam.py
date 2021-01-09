@@ -43,15 +43,15 @@ def get_names_from_results(results_string: str, min_result: int) -> list:
     """
     names = results_string.split(',')
     choosens = []
-    name_scores = {}
+    name_scores = []
     for name in names:
         score = name.split(' ')[-1]
         name = name.split(' ')[:-1]
         if name:
-            name_scores[name[0]] = score
-    for i in name_scores.items():
+            name_scores.append((name, score))
+    for i in name_scores:
         if int(i[1]) >= min_result:
-            choosens.append(i[0])
+            choosens.append(' '.join(i[0]))
     return choosens
 
 
@@ -81,7 +81,7 @@ def tic_tac_toe(game: list) -> int:
     for i in range(3):
         if game[0][i] == game[1][i] == game[2][i] and game[0][i] != 0:
             return int(game[0][i])
-    if game[0][0] == game[1][1] == game[2][2] or game[0][2] == game[1][1] == game[2][1]:
+    if game[0][0] == game[1][1] == game[2][2] or game[0][2] == game[1][1] == game[2][0]:
         if game[1][1] != 0:
             return int(game[1][1])
     return 0
@@ -103,12 +103,12 @@ def rainbows(field: str, lower=False) -> int:
     :return: number of rainbows in the string
     """
     field = list(field.lower())
-    if set('rainbow') - set(field) == set():
-        for i in list('rainbow'):
+    for i in list('rainbow'):
+        try:
             field.remove(i)
-        return 1 + rainbows(str(field))
-    else:
-        return 0
+        except ValueError:
+            return 0
+    return 1 + rainbows(str(field))
 
 
 def longest_substring(text: str) -> str:
@@ -369,12 +369,13 @@ class Hotel:
 
 
 if __name__ == '__main__':
-    print(get_names_from_results("ago 123,peeter 11", 0))
+    print(get_names_from_results("pille riin 12,kusti jaan rikop kairo puhi 123", 0))
     print(get_names_from_results("ago 123,peeter 11,33", 10))
     print(get_names_from_results("ago 123,peeter 11", 100))
     print(get_names_from_results("ago 123,peeter 11,kitty11!! 33", 11))
     print(get_names_from_results("ago 123,peeter 11,kusti riin 14", 12))
-    print(tic_tac_toe([[1, 0, 0], [1, 1, 2], [0, 2, 2]]))
+    print(tic_tac_toe([[1, 0, 1], [2, 1, 2], [2, 2, 1]]))
+    print(rainbows('wobwobwobaaaariiiiinnnnnrrrr'))
     print(longest_substring('babcdEFghij'))
     hotel = Hotel()
     room1 = Room(1, 100)
