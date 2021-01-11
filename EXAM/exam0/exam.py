@@ -131,13 +131,14 @@ def longest_substring(text: str) -> str:
     """
     subs = []
     holder = ''
-    for char in text:
-        if char.lower() in holder.lower() or text.index(char) == len(text) - 1:
-            if char.lower() not in holder.lower():
-                holder += char
-            subs.append(holder)
-            holder = ''
-        holder += char
+    for i in range(len(text)):
+        for char in text[i:]:
+            if char.lower() in holder.lower() or text.index(char) == len(text) - 1:
+                if char.lower() not in holder.lower():
+                    holder += char
+                subs.append(holder)
+                holder = ''
+            holder += char
     return max(subs, key=lambda x: len(x))
 
 
@@ -375,8 +376,9 @@ if __name__ == '__main__':
     print(get_names_from_results("ago 123,peeter 11,kitty11!! 33", 11))
     print(get_names_from_results("ago 123,peeter 11,kusti riin 14", 12))
     print(tic_tac_toe([[1, 0, 1], [2, 1, 2], [2, 2, 1]]))
-    print(rainbows('wobwobwobaaaariiiiinnnnnrrrr'))
-    print(longest_substring('babcdEFghij'))
+    print(rainbows('aababcabcdabcdeabcdefabcdefgqwertyuiop'))
+    print(longest_substring('aababcabcdabcdeabcdefabcdefgqwertyuiop'))
+    print(longest_substring('asasadfghjk'))
     hotel = Hotel()
     room1 = Room(1, 100)
     room1.add_feature("tv")
